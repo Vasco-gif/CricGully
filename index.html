@@ -364,6 +364,24 @@
     font-weight: 600;
   }
 
+  /* G2 Final Scorecard */
+  .g2-scorecard{margin-top:24px;}
+  .g2-sc-section{margin-bottom:20px;}
+  .g2-sc-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--accent2);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .g2-sc-title::after{content:'';flex:1;height:1px;background:var(--border);}
+  .g2-sc-table{width:100%;border-collapse:collapse;background:var(--surface2);border-radius:10px;overflow:hidden;}
+  .g2-sc-table thead th{background:rgba(0,0,0,0.3);padding:8px 12px;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);text-align:left;}
+  .g2-sc-table thead th:not(:first-child){text-align:right;}
+  .g2-sc-table tbody tr{border-top:1px solid rgba(255,255,255,0.04);transition:background 0.15s;}
+  .g2-sc-table tbody tr:hover{background:rgba(255,255,255,0.03);}
+  .g2-sc-table tbody td{padding:9px 12px;font-size:0.83rem;}
+  .g2-sc-table tbody td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+  .g2-sc-name{font-weight:700;}
+  .g2-sc-sub{font-size:0.7rem;color:var(--muted);margin-top:2px;}
+  .g2-sc-out{color:#f87171;}
+  .g2-sc-notout{color:#4ade80;}
+  .g2-sc-highlight td{background:rgba(232,121,249,0.05);}
+
   @media(max-width:600px){
     .score-runs{font-size:2.4rem;}
     .batsmen-select{grid-template-columns:1fr 1fr;}
@@ -422,7 +440,7 @@
       🏘️ <strong>Gully Mode:</strong> No non-striker. Sets of 6. Any bowler can change mid-set. Last player keeps batting solo — no all-out!
     </div>
     <div class="mode-note gully2" id="gully2Note">
-      🎯 <strong>Gully 2 Mode:</strong> No teams — just players! Each person bats one innings (a set of 6 balls). Others bowl or field. Top scorer wins. Perfect for street play with friends!
+      🎯 <strong>Gully 2 Mode:</strong> Individual chance cricket! Set the batting order before starting. Each player bats solo until they get <strong>OUT</strong> — one wicket ends their turn. Others bowl &amp; field. Top scorer wins!
     </div>
 
     <div id="teamSetupSection">
@@ -445,12 +463,18 @@
 
     <div class="g2-players-setup" id="g2PlayersSetup">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-        <div class="input-group"><label>Sets per Player</label><input type="number" id="g2Sets" value="1" min="1" max="5"></div>
-        <div class="input-group"><label>Balls per Set</label><input type="number" id="g2BallsPerSet" value="6" min="1" max="12"></div>
+        <div class="input-group"><label>Balls per Over (display)</label><input type="number" id="g2BallsPerSet" value="6" min="1" max="12"></div>
+        <div class="input-group"><label>Max Balls per Player <span style="font-size:0.7rem;color:var(--muted)">(0 = unlimited)</span></label><input type="number" id="g2MaxBalls" value="0" min="0" max="120"></div>
       </div>
       <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Players (min 3, max 12)</div>
       <div class="g2-player-list" id="g2PlayerList"></div>
       <button class="g2-add-btn" onclick="addG2Player()">+ Add Player</button>
+      <div id="g2OrderSection" style="display:none;margin-top:18px;">
+        <div style="font-size:0.75rem;font-weight:700;color:var(--g2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">🔢 Set Batting Order — Drag to Reorder</div>
+        <div id="g2OrderList" style="display:flex;flex-direction:column;gap:6px;"></div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:8px;">Drag the names to set who bats first, second, etc.</div>
+      </div>
+      <button class="g2-add-btn" id="g2SetOrderBtn" onclick="showG2OrderSection()" style="margin-top:14px;background:rgba(232,121,249,0.1);border-color:var(--g2);color:var(--g2);display:none;">✏️ Set Batting Order</button>
     </div>
 
     <button class="btn-start" onclick="startMatch()">START MATCH</button>
@@ -469,6 +493,7 @@
     <div class="g2-result" id="g2ResultBanner">
       <h2>🏆 FINAL LEADERBOARD</h2>
       <div class="g2-podium" id="g2Podium"></div>
+      <div class="g2-scorecard" id="g2Scorecard"></div>
       <div style="text-align: center;">
         <button class="btn-exit-home" onclick="goHome()">🏠 HOME / NEW MATCH</button>
       </div>
@@ -494,7 +519,7 @@
         <div class="g2-stat"><div class="g2-stat-val" id="g2BatterRuns">0</div><div class="g2-stat-lbl">Runs</div></div>
         <div class="g2-stat"><div class="g2-stat-val" id="g2BatterBalls">0</div><div class="g2-stat-lbl">Balls</div></div>
         <div class="g2-stat"><div class="g2-stat-val" id="g2BatterSR">0.0</div><div class="g2-stat-lbl">Strike Rate</div></div>
-        <div class="g2-stat"><div class="g2-stat-val" id="g2BallsLeft">6</div><div class="g2-stat-lbl">Balls Left</div></div>
+        <div class="g2-stat"><div class="g2-stat-val" id="g2BallsLeft">6</div><div class="g2-stat-lbl" id="g2BallsLeftLabel">Balls Left</div></div>
       </div>
       <div class="g2-queue">
         <div class="g2-queue-label">Batting Order</div>
@@ -660,7 +685,14 @@
 
     <div class="modal-actions" style="margin-top: 24px;">
       <button class="btn-cancel" onclick="closeStatsModal()" style="flex: 2;">Close</button>
-      <button class="btn-cancel" onclick="clearStats()" style="flex: 1; border-color: #ef4444; color: #ef4444;">Clear Data</button>
+      <button class="btn-cancel" id="clearStatsBtn" onclick="showClearConfirm()" style="flex: 1; border-color: #ef4444; color: #ef4444;">Clear Data</button>
+    </div>
+    <div id="clearConfirm" style="display:none;margin-top:12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.4);border-radius:10px;padding:12px 14px;text-align:center;">
+      <div style="font-size:0.82rem;color:#f87171;margin-bottom:10px;">⚠ This will permanently delete all lifetime stats. Sure?</div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="confirmClearStats()" style="flex:1;background:rgba(239,68,68,0.2);border:2px solid #ef4444;color:#f87171;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;padding:8px;border-radius:8px;cursor:pointer;">YES, DELETE</button>
+        <button onclick="hideClearConfirm()" style="flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.9rem;padding:8px;border-radius:8px;cursor:pointer;">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
@@ -698,6 +730,9 @@ function saveMatchStats() {
         b: p.b,
         ducks: (p.r === 0 && p.out) ? 1 : 0 
       };
+    });
+    Object.entries(g2State.bowlers).forEach(([name, s]) => {
+      matchData.bowlers[name] = { runs: s.runs, wickets: s.wickets, balls: s.balls };
     });
   } else if (match) {
     innings.forEach(inn => {
@@ -772,16 +807,17 @@ function showStatsModal() {
   $('statsModal').classList.add('open');
 }
 
-function closeStatsModal() {
-  $('statsModal').classList.remove('open');
-}
-
 function clearStats() {
-  if(confirm("Are you sure you want to delete all lifetime stats?")) {
-    localStorage.removeItem('cricscore_history');
-    closeStatsModal();
-    showToast("Stats cleared successfully");
-  }
+  localStorage.removeItem('cricscore_history');
+  closeStatsModal();
+  showToast("Stats cleared successfully");
+}
+function showClearConfirm(){ $('clearConfirm').style.display='block'; }
+function hideClearConfirm(){ $('clearConfirm').style.display='none'; }
+function confirmClearStats(){ hideClearConfirm(); clearStats(); }
+function closeStatsModal() {
+  hideClearConfirm();
+  $('statsModal').classList.remove('open');
 }
 
 // ── ESC ───────────────────────────────────────────────────
@@ -805,8 +841,8 @@ function resetMatch(){
   if(g2State){
     const players=g2State.players.map(p=>p.name);
     const bps=g2State.ballsPerSet;
-    const spp=g2State.setsPerPlayer;
-    initG2(players,bps,spp);
+    const maxBalls=g2State.maxBalls||0;
+    initG2(players,bps,maxBalls);
     renderG2();
     showToast('Match reset!');
     return;
@@ -843,7 +879,7 @@ function selectFormat(fmt,btn){
   else if(fmt==='odi'){ov.value=50;og.style.display='';}
   else if(fmt==='test'){og.style.display='none';}
   else if(fmt==='gully'){ov.value=6;og.style.display='';}
-  if(isG2)initG2PlayerInputs();
+  if(isG2){initG2PlayerInputs();g2BattingOrder=null;}
 }
 
 // ── G2 player inputs ──────────────────────────────────────
@@ -851,6 +887,7 @@ let g2PlayerCount=4;
 function initG2PlayerInputs(){
   const list=$('g2PlayerList');list.innerHTML='';
   for(let i=0;i<g2PlayerCount;i++)addG2PlayerInput(i+1);
+  updateG2OrderBtn();
 }
 function addG2PlayerInput(num){
   const inp=document.createElement('input');
@@ -858,12 +895,55 @@ function addG2PlayerInput(num){
   inp.style.cssText='background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:7px;font-family:DM Sans,sans-serif;font-size:0.85rem;outline:none;width:100%;';
   inp.onfocus=e=>{e.target.style.borderColor='var(--g2)';};
   inp.onblur=e=>{e.target.style.borderColor='var(--border)';};
+  inp.oninput=updateG2OrderBtn;
   $('g2PlayerList').appendChild(inp);
 }
 function addG2Player(){
   if(g2PlayerCount>=12){showToast('Max 12 players');return;}
   g2PlayerCount++;
   addG2PlayerInput(g2PlayerCount);
+  updateG2OrderBtn();
+}
+function updateG2OrderBtn(){
+  const btn=$('g2SetOrderBtn');
+  if(btn)btn.style.display='block';
+}
+let g2BattingOrder=null; // null = use entry order
+function showG2OrderSection(){
+  const names=[];
+  for(let i=0;i<g2PlayerCount;i++){
+    const v=$(`g2p${i}`)?.value.trim();
+    names.push(v||`Player ${i+1}`);
+  }
+  // Use existing order if set, else default
+  const order=g2BattingOrder&&g2BattingOrder.length===names.length?g2BattingOrder:[...names];
+  g2BattingOrder=order;
+  renderG2OrderList();
+  $('g2OrderSection').style.display='block';
+}
+function renderG2OrderList(){
+  const list=$('g2OrderList');list.innerHTML='';
+  g2BattingOrder.forEach((name,idx)=>{
+    const row=document.createElement('div');
+    row.dataset.idx=idx;
+    row.draggable=true;
+    row.style.cssText='display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);padding:10px 14px;border-radius:8px;cursor:grab;user-select:none;transition:background 0.15s;';
+    row.innerHTML=`<span style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;color:var(--g2);min-width:22px;">${idx+1}</span><span style="flex:1;font-weight:600;">${name}</span><span style="color:var(--muted);font-size:0.85rem;">⠿</span>`;
+    row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',idx);row.style.opacity='0.4';});
+    row.addEventListener('dragend',()=>{row.style.opacity='1';});
+    row.addEventListener('dragover',e=>{e.preventDefault();row.style.background='rgba(232,121,249,0.15)';});
+    row.addEventListener('dragleave',()=>{row.style.background='var(--surface2)';});
+    row.addEventListener('drop',e=>{
+      e.preventDefault();row.style.background='var(--surface2)';
+      const from=parseInt(e.dataTransfer.getData('text/plain'));
+      const to=idx;
+      if(from===to)return;
+      const item=g2BattingOrder.splice(from,1)[0];
+      g2BattingOrder.splice(to,0,item);
+      renderG2OrderList();
+    });
+    list.appendChild(row);
+  });
 }
 initG2PlayerInputs();
 
@@ -914,15 +994,26 @@ function startMatch(){
 
 // ── GULLY 2 LOGIC ─────────────────────────────────────────
 function startG2Match(){
-  const names=[];
+  const rawNames=[];
   for(let i=0;i<g2PlayerCount;i++){
     const v=$(`g2p${i}`)?.value.trim();
-    names.push(v||`Player ${i+1}`);
+    rawNames.push(v||`Player ${i+1}`);
   }
-  if(names.length<2){showToast('Need at least 2 players');return;}
+  if(rawNames.length<3){showToast('Need at least 3 players');return;}
+  // Use batting order if set, otherwise entry order
+  let orderedNames;
+  if(g2BattingOrder&&g2BattingOrder.length===rawNames.length){
+    // Re-map batting order (user may have updated names since setting order)
+    orderedNames=g2BattingOrder.map(oName=>{
+      // Try exact match first, then positional
+      return rawNames.includes(oName)?oName:oName;
+    });
+  } else {
+    orderedNames=[...rawNames];
+  }
   const bps=parseInt($('g2BallsPerSet').value)||6;
-  const spp=parseInt($('g2Sets').value)||1;
-  initG2(names,bps,spp);
+  const maxBalls=parseInt($('g2MaxBalls').value)||0;
+  initG2(orderedNames,bps,maxBalls);
   $('setupCard').style.display='none';
   $('scoreboard').style.display='block';
   $('escBtn').classList.add('visible');
@@ -930,18 +1021,19 @@ function startG2Match(){
   showG2NextBanner();
 }
 
-function initG2(names,bps,spp){
+function initG2(names,bps,maxBalls){
   g2State={
-    players:names.map(n=>({name:n,r:0,b:0,fours:0,sixes:0,out:false,outDesc:'',sets:[],totalBalls:0,currentSetBalls:[],done:false})),
+    players:names.map(n=>({name:n,r:0,b:0,fours:0,sixes:0,out:false,outDesc:'',overHistory:[],totalBalls:0,currentOverBalls:[],currentOverNum:1,done:false})),
     currentBatterIdx:0,
     bowlerIdx:1,
     ballsPerSet:bps,
-    setsPerPlayer:spp,
+    maxBalls:maxBalls,
     currentSetBalls:[],
     currentBowler:names.length>1?names[1]:names[0],
     completedBatters:0,
     history:[],
-    started:false
+    started:false,
+    bowlers:{} // name -> {balls, runs, wickets, wides, noballs}
   };
   match=null;
 }
@@ -949,19 +1041,27 @@ function initG2(names,bps,spp){
 function g2CurrentBatter(){return g2State.players[g2State.currentBatterIdx];}
 
 function g2BallsLeftForCurrent(){
-  const bps=g2State.ballsPerSet;
-  const spp=g2State.setsPerPlayer;
-  const totalAllowed=bps*spp;
-  const legalDone=g2State.currentSetBalls.filter(b=>!['WD','NB'].includes(b)).length;
-  return totalAllowed-legalDone;
+  if(!g2State.maxBalls)return null; // unlimited
+  const legalDone=g2State.currentSetBalls.filter(b=>!['WD','NB'].includes(b)).length + g2CurrentBatter().overHistory.reduce((s,o)=>s+o.balls.filter(b=>!['WD','NB'].includes(b)).length,0);
+  return Math.max(0,g2State.maxBalls-legalDone);
+}
+
+function g2LegalBallsThisTurn(){
+  // Count total legal balls for current batter across all overs this turn
+  const pastBalls = g2CurrentBatter().overHistory.reduce((s,o)=>s+o.balls.filter(b=>!['WD','NB'].includes(b)).length,0);
+  const curBalls = g2State.currentSetBalls.filter(b=>!['WD','NB'].includes(b)).length;
+  return pastBalls+curBalls;
 }
 
 function showG2NextBanner(){
   const idx=g2State.currentBatterIdx;
   const batter=g2State.players[idx];
   const bowlerName=g2State.currentBowler;
+  const position=idx+1;
+  const total=g2State.players.length;
   $('g2NextTitle').textContent=`${batter.name.toUpperCase()} TO BAT!`;
-  $('g2NextText').textContent=`Sets: ${g2State.setsPerPlayer} × ${g2State.ballsPerSet} balls = ${g2State.setsPerPlayer*g2State.ballsPerSet} balls total. Bowler: ${bowlerName}`;
+  const limitText=g2State.maxBalls>0?`Max ${g2State.maxBalls} balls. `:'Bats until OUT. ';
+  $('g2NextText').textContent=`Batter ${position} of ${total}. ${limitText}Bowler: ${bowlerName}`;
   $('g2NextBanner').style.display='block';
   $('g2BatterHero').style.display='none';
   $('scoringPanel').style.display='none';
@@ -981,21 +1081,23 @@ function renderG2(){
   $('standardBattingSection').style.display='none';
   $('scoreHero').style.display='none';
   $('inningsTabBar').innerHTML='';
-  $('historyLabel').textContent='Set History';
-  $('currentSetLabel').textContent=`Current Set`;
+  $('historyLabel').textContent='Over History';
+  const overNum=g2State.started?(g2CurrentBatter().overHistory.length+1):1;
+  $('currentSetLabel').textContent=`Current Over (Over ${overNum})`;
 
   const sp=$('scoringPanel');
   sp.classList.remove('gully-panel');sp.classList.add('g2-panel');
   $('scoringPanelTitle').textContent='🎯 Gully 2 Score Entry';
-  $('nonStrikerGroup').style.display='none';
-  $('batsmenSelect').classList.add('g2-select');
-  $('batsmenSelect').classList.remove('gully-select');
-  
+
+  // Rebuild batsmenSelect entirely for G2 (bowler-only, no striker/non-striker)
+  $('batsmenSelect').className='batsmen-select g2-select';
   $('batsmenSelect').innerHTML=`
     <div class="input-group" id="bowlerGroup"><label>Bowler</label>
       <select id="bowlerSelect">${g2State.players.filter((_,i)=>i!==g2State.currentBatterIdx).map(p=>`<option value="${p.name}" ${p.name===g2State.currentBowler?'selected':''}>${p.name}</option>`).join('')}</select>
     </div>`;
-  document.addEventListener('change',e=>{if(e.target.id==='bowlerSelect')g2State.currentBowler=e.target.value;});
+  // Re-attach change listener each render (use a named handler to avoid stacking)
+  const bs=$('bowlerSelect');
+  if(bs) bs.onchange=e=>{g2State.currentBowler=e.target.value;};
 
   $('wicketBtn').textContent='⚡ WICKET (OUT)';
 
@@ -1010,14 +1112,17 @@ function renderG2(){
     const sr=p.b>0?((p.r/p.b)*100).toFixed(1):'–';
     const rankClass=rank===0?'gold':rank===1?'silver':rank===2?'bronze':'';
     const rankLabel=['🥇','🥈','🥉'][rank]||(rank+1)+'';
+    // Batting position label
+    const batPos=g2State.players.findIndex(pl=>pl.name===p.name)+1;
     let statusHtml='';
-    if(isCur&&!p.done) statusHtml=`<span class="g2-lb-status batting">Batting</span>`;
-    else if(p.done) statusHtml=`<span class="g2-lb-status out">${p.r}R done</span>`;
-    else if(isBowler&&!p.done) statusHtml=`<span class="g2-lb-status bowling">Bowling</span>`;
-    else statusHtml=`<span class="g2-lb-status waiting">Waiting</span>`;
+    if(isCur&&!p.done) statusHtml=`<span class="g2-lb-status batting">🏏 Batting</span>`;
+    else if(p.done&&p.out) statusHtml=`<span class="g2-lb-status out">OUT · ${p.r}R</span>`;
+    else if(p.done&&!p.out) statusHtml=`<span class="g2-lb-status out">${p.r}R done</span>`;
+    else if(isBowler&&!p.done) statusHtml=`<span class="g2-lb-status bowling">⚡ Bowling</span>`;
+    else statusHtml=`<span class="g2-lb-status waiting">#${batPos} waiting</span>`;
     const row=document.createElement('div');
     row.className=`g2-lb-row${isCur&&!p.done?' current-batter':''}${p.done?' done-batter':''}`;
-    row.innerHTML=`<span class="g2-rank ${rankClass}">${rankLabel}</span><span class="g2-lb-name">${p.name}</span><span class="g2-lb-score">${p.r}</span><span class="g2-lb-sr">SR ${sr}</span>${statusHtml}`;
+    row.innerHTML=`<span class="g2-rank ${rankClass}">${rankLabel}</span><span class="g2-lb-name">${p.name}</span><span class="g2-lb-score">${p.r}</span><span class="g2-lb-sr">${p.b}b · SR ${sr}</span>${statusHtml}`;
     lbRows.appendChild(row);
   });
 
@@ -1029,7 +1134,10 @@ function renderG2(){
   $('g2BatterBalls').textContent=batter.b;
   const sr=batter.b>0?((batter.r/batter.b)*100).toFixed(1):'0.0';
   $('g2BatterSR').textContent=sr;
-  $('g2BallsLeft').textContent=Math.max(0,g2BallsLeftForCurrent());
+  const ballsLeft=g2BallsLeftForCurrent();
+  $('g2BallsLeft').textContent=ballsLeft===null?'∞':Math.max(0,ballsLeft);
+  const lbl=$('g2BallsLeftLabel');
+  if(lbl)lbl.textContent=ballsLeft===null?'Bat Until OUT':'Balls Left';
 
   const chips=$('g2QueueChips');chips.innerHTML='';
   g2State.players.forEach((p,i)=>{
@@ -1037,7 +1145,7 @@ function renderG2(){
     const isCur=i===g2State.currentBatterIdx;
     const isBowl=p.name===g2State.currentBowler;
     chip.className=`g2-chip ${p.done?'g2-chip-done':isCur?'g2-chip-next':isBowl?'g2-chip-bowling':'g2-chip-pending'}`;
-    chip.textContent=p.name+(isCur?' 🏏':isBowl?' ⚡':'');
+    chip.textContent=`${i+1}. ${p.name}${isCur?' 🏏':isBowl?' ⚡':p.done?' ✓':''}`;
     chips.appendChild(chip);
   });
 
@@ -1063,16 +1171,16 @@ function renderG2SetBalls(){
 function renderG2SetHistory(){
   const container=$('overHistory');container.innerHTML='';
   const batter=g2CurrentBatter();
-  if(!batter.sets.length)return;
-  batter.sets.slice().reverse().forEach((set,idx)=>{
-    const setNum=batter.sets.length-idx;
-    const balls=set.balls.map(b=>{
+  if(!batter.overHistory||!batter.overHistory.length)return;
+  batter.overHistory.slice().reverse().forEach((over,idx)=>{
+    const overNum=batter.overHistory.length-idx;
+    const balls=over.balls.map(b=>{
       const color=b==='W'?'#f87171':['WD','NB'].includes(b)?'#fbbf24':['LB','BY'].includes(b)?'#a78bfa':parseInt(b)>=6?'#c084fc':parseInt(b)>=4?'#60a5fa':parseInt(b)>=1?'#4ade80':'var(--muted)';
       const bg=b==='W'?'rgba(239,68,68,0.2)':parseInt(b)>=6?'rgba(168,85,247,0.2)':parseInt(b)>=4?'rgba(59,130,246,0.2)':'var(--surface3)';
       return `<div class="mini-ball" style="background:${bg};color:${color}">${b}</div>`;
     }).join('');
     const row=document.createElement('div');row.className='over-history-row';
-    row.innerHTML=`<span class="over-num" style="color:var(--g2)">Set ${setNum}</span><div class="over-balls-inline">${balls}</div><span class="over-total">${set.runs} runs</span>`;
+    row.innerHTML=`<span class="over-num" style="color:var(--g2)">Over ${overNum}</span><div class="over-balls-inline">${balls}</div><span class="over-total">${over.runs} runs</span>`;
     container.appendChild(row);
   });
 }
@@ -1085,6 +1193,12 @@ function g2SaveHistory(){
     currentSetBalls:[...g2State.currentSetBalls],
     completedBatters:g2State.completedBatters
   })));
+  // Limit history to 30 to avoid memory bloat
+  if(g2State.history.length>30)g2State.history.shift();
+}
+
+function g2EnsureBowler(name){
+  if(!g2State.bowlers[name])g2State.bowlers[name]={balls:0,runs:0,wickets:0,wides:0,noballs:0};
 }
 
 function addBallG2(runs){
@@ -1095,7 +1209,13 @@ function addBallG2(runs){
   if(runs===4)batter.fours++;
   if(runs===6)batter.sixes++;
   g2State.currentSetBalls.push(runs);
-  checkG2SetEnd();
+  // Track bowler stats
+  const bowler=g2State.currentBowler;
+  g2EnsureBowler(bowler);
+  g2State.bowlers[bowler].balls++;
+  g2State.bowlers[bowler].runs+=runs;
+  checkG2OverEnd();
+  checkG2MaxBalls();
   renderG2();
 }
 
@@ -1103,48 +1223,82 @@ function addExtraG2(type){
   const batter=g2CurrentBatter();
   if(batter.done)return;
   g2SaveHistory();
-  if(type==='WD'||type==='NB'){batter.r+=1;g2State.currentSetBalls.push(type==='WD'?'WD':'NB');}
-  else if(type==='LB'||type==='BYE'){batter.r+=1;batter.b+=1;batter.totalBalls+=1;g2State.currentSetBalls.push(type==='LB'?'LB':'BY');checkG2SetEnd();}
+  const bowler=g2State.currentBowler;
+  g2EnsureBowler(bowler);
+  if(type==='WD'||type==='NB'){
+    batter.r+=1;
+    g2State.currentSetBalls.push(type==='WD'?'WD':'NB');
+    g2State.bowlers[bowler].runs+=1;
+    if(type==='WD')g2State.bowlers[bowler].wides++;
+    else g2State.bowlers[bowler].noballs++;
+  } else if(type==='LB'||type==='BYE'){
+    batter.r+=1;batter.b+=1;batter.totalBalls+=1;
+    g2State.currentSetBalls.push(type==='LB'?'LB':'BY');
+    g2State.bowlers[bowler].balls++;
+    g2State.bowlers[bowler].runs+=1;
+    checkG2OverEnd();
+    checkG2MaxBalls();
+  }
   renderG2();
 }
 
-function checkG2SetEnd(){
+function checkG2OverEnd(){
+  // End of a display over (every bps legal balls)
   const bps=g2State.ballsPerSet;
-  const legalBalls=g2State.currentSetBalls.filter(b=>!['WD','NB'].includes(b)).length;
-  if(legalBalls>=bps){
-    const setRuns=g2State.currentSetBalls.reduce((s,b)=>{
+  const legalInThisOver=g2State.currentSetBalls.filter(b=>!['WD','NB'].includes(b)).length;
+  if(legalInThisOver>=bps){
+    const overRuns=g2State.currentSetBalls.reduce((s,b)=>{
       if(['WD','NB'].includes(b))return s+1;
       if(['LB','BY'].includes(b))return s+1;
       if(b==='W')return s;
       return s+(parseInt(b)||0);
     },0);
     const batter=g2CurrentBatter();
-    batter.sets.push({balls:[...g2State.currentSetBalls],runs:setRuns});
+    batter.overHistory.push({balls:[...g2State.currentSetBalls],runs:overRuns,overNum:batter.overHistory.length+1});
     g2State.currentSetBalls=[];
-    const setsCompleted=batter.sets.length;
-    if(setsCompleted>=g2State.setsPerPlayer){
-      batter.done=true;
-      g2State.completedBatters++;
-      showToast(`${batter.name} done! ${batter.r} runs off ${batter.b} balls`);
-      g2AdvanceBatter();
-    } else {
-      showToast(`Set ${setsCompleted} done! ${setRuns} runs.`);
+    showToast(`Over complete! ${overRuns} runs this over.`);
+  }
+}
+
+function checkG2MaxBalls(){
+  const batter=g2CurrentBatter();
+  if(!g2State.maxBalls)return; // unlimited — only OUT ends turn
+  const totalLegal=g2LegalBallsThisTurn();
+  if(totalLegal>=g2State.maxBalls){
+    // Max balls reached — batter's turn over (not out, just retired)
+    batter.done=true;
+    // Save any remaining current over balls
+    if(g2State.currentSetBalls.length>0){
+      const overRuns=g2State.currentSetBalls.reduce((s,b)=>{
+        if(['WD','NB'].includes(b))return s+1;if(['LB','BY'].includes(b))return s+1;if(b==='W')return s;return s+(parseInt(b)||0);
+      },0);
+      batter.overHistory.push({balls:[...g2State.currentSetBalls],runs:overRuns,overNum:batter.overHistory.length+1});
+      g2State.currentSetBalls=[];
     }
+    g2State.completedBatters++;
+    showToast(`${batter.name} done! ${batter.r} runs off ${batter.b} balls`);
+    g2AdvanceBatter();
   }
 }
 
 function g2OutCurrentBatter(outDesc){
   const batter=g2CurrentBatter();
   batter.out=true;batter.outDesc=outDesc;batter.done=true;
+  // Credit wicket to bowler (not for run-outs, obstructions, handled ball)
+  const bowler=g2State.currentBowler;
+  g2EnsureBowler(bowler);
+  const noBowlerWicket=['ro','obstr','mnh'];
+  const isBowlerWicket=!noBowlerWicket.some(t=>outDesc.startsWith('run out')||outDesc.startsWith('obstructed')||outDesc.startsWith('handled'));
+  if(isBowlerWicket)g2State.bowlers[bowler].wickets++;
   if(g2State.currentSetBalls.length>0){
-    const setRuns=g2State.currentSetBalls.reduce((s,b)=>{
+    const overRuns=g2State.currentSetBalls.reduce((s,b)=>{
       if(['WD','NB'].includes(b))return s+1;if(['LB','BY'].includes(b))return s+1;if(b==='W')return s;return s+(parseInt(b)||0);
     },0);
-    batter.sets.push({balls:[...g2State.currentSetBalls],runs:setRuns});
+    batter.overHistory.push({balls:[...g2State.currentSetBalls],runs:overRuns,overNum:batter.overHistory.length+1});
     g2State.currentSetBalls=[];
   }
   g2State.completedBatters++;
-  showToast(`OUT! ${batter.name} – ${outDesc}`);
+  showToast(`OUT! ${batter.name} – ${outDesc} · ${batter.r} runs`);
   g2AdvanceBatter();
 }
 
@@ -1154,7 +1308,7 @@ function g2AdvanceBatter(){
     if(!g2State.players[i].done){next=i;break;}
   }
   const allDone=g2State.players.every(p=>p.done);
-  if(allDone){
+  if(allDone||next===-1){
     showG2FinalResult();
     $('scoringPanel').style.display='none';
     $('g2BatterHero').style.display='none';
@@ -1162,14 +1316,13 @@ function g2AdvanceBatter(){
     renderG2();
     return;
   }
-  if(next===-1){
-    showG2FinalResult();
-    return;
-  }
   g2State.currentBatterIdx=next;
   g2State.started=false;
   const batterName=g2State.players[next].name;
-  const candidate=g2State.players.find(p=>p.name!==batterName&&!p.done);
+  // Pick bowler: prefer someone who has already batted (done=true), else first non-batter
+  const donePlayers=g2State.players.filter(p=>p.done&&p.name!==batterName);
+  const waitingPlayers=g2State.players.filter(p=>!p.done&&p.name!==batterName);
+  const candidate=donePlayers.length>0?donePlayers[0]:waitingPlayers[0];
   if(candidate)g2State.currentBowler=candidate.name;
   renderG2();
   showG2NextBanner();
@@ -1178,14 +1331,102 @@ function g2AdvanceBatter(){
 function showG2FinalResult(){
   const sorted=[...g2State.players].sort((a,b)=>b.r-a.r||(a.b-b.b));
   $('g2ResultBanner').style.display='block';
+
+  // ── Podium (top 3) ──
   $('g2Podium').innerHTML=sorted.slice(0,3).map((p,i)=>{
     const medals=['🥇','🥈','🥉'];const classes=['first','second','third'];
     const sr=p.b>0?((p.r/p.b)*100).toFixed(1):'0.0';
-    return `<div class="g2-podium-place ${classes[i]}"><span class="g2-podium-medal">${medals[i]}</span><div class="g2-podium-name">${p.name}</div><div class="g2-podium-runs">${p.r} runs</div><div class="g2-podium-sr">SR ${sr} · ${p.b} balls</div></div>`;
+    const status=p.out?`OUT · ${p.outDesc}`:'Not Out';
+    return `<div class="g2-podium-place ${classes[i]}">
+      <span class="g2-podium-medal">${medals[i]}</span>
+      <div class="g2-podium-name">${p.name}</div>
+      <div class="g2-podium-runs">${p.r} runs</div>
+      <div class="g2-podium-sr">SR ${sr} · ${p.b}b · ${p.fours}×4 · ${p.sixes}×6</div>
+      <div style="font-size:0.68rem;color:${p.out?'#f87171':'#4ade80'};margin-top:3px;">${status}</div>
+    </div>`;
   }).join('');
+
+  // ── Full Batting Scorecard ──
+  const battingRows=g2State.players.map((p,idx)=>{
+    const sr=p.b>0?((p.r/p.b)*100).toFixed(1):'0.0';
+    const rank=sorted.findIndex(s=>s.name===p.name)+1;
+    const statusText=p.out?p.outDesc:'not out';
+    const statusClass=p.out?'g2-sc-out':'g2-sc-notout';
+    return `<tr class="${idx===0?'g2-sc-highlight':''}">
+      <td>
+        <div class="g2-sc-name">${p.name}</div>
+        <div class="g2-sc-sub ${statusClass}">${statusText}</div>
+      </td>
+      <td>${p.r}</td>
+      <td>${p.b}</td>
+      <td>${p.fours}</td>
+      <td>${p.sixes}</td>
+      <td>${sr}</td>
+    </tr>`;
+  }).join('');
+
+  // ── Bowling Scorecard ──
+  const bowlerEntries=Object.entries(g2State.bowlers).sort((a,b)=>b[1].wickets-a[1].wickets||(a[1].balls&&b[1].balls?(a[1].runs/a[1].balls)-(b[1].runs/b[1].balls):0));
+  const bowlingRows=bowlerEntries.map(([name,s])=>{
+    const overs=s.balls>0?`${Math.floor(s.balls/g2State.ballsPerSet)}.${s.balls%g2State.ballsPerSet}`:'0.0';
+    const econ=s.balls>0?((s.runs/s.balls)*g2State.ballsPerSet).toFixed(2):'–';
+    // Find who this bowler got out
+    const victims=g2State.players
+      .filter(p=>p.out&&p.outDesc&&!p.outDesc.startsWith('run out')&&!p.outDesc.startsWith('obstructed')&&!p.outDesc.startsWith('handled')&&p.outDesc.includes(name))
+      .map(p=>p.name);
+    const victimsText=victims.length?victims.join(', '):'–';
+    return `<tr>
+      <td>
+        <div class="g2-sc-name">${name}</div>
+        <div class="g2-sc-sub" style="color:${s.wickets>0?'#f87171':'var(--muted)'};">${victims.length?`Took: ${victimsText}`:'No wickets'}</div>
+      </td>
+      <td>${overs}</td>
+      <td>${s.runs}</td>
+      <td style="color:${s.wickets>0?'#f87171':'inherit'};font-weight:${s.wickets>0?700:400};">${s.wickets}</td>
+      <td>${s.wides||0}</td>
+      <td>${s.noballs||0}</td>
+      <td>${econ}</td>
+    </tr>`;
+  }).join('');
+
+  const totalRuns=g2State.players.reduce((s,p)=>s+p.r,0);
+  const totalBalls=g2State.players.reduce((s,p)=>s+p.b,0);
+  const totalWickets=g2State.players.filter(p=>p.out).length;
+  const totalFours=g2State.players.reduce((s,p)=>s+p.fours,0);
+  const totalSixes=g2State.players.reduce((s,p)=>s+p.sixes,0);
+
+  $('g2Scorecard').innerHTML=`
+    <div class="g2-sc-section">
+      <div class="g2-sc-title">🏏 BATTING SCORECARD</div>
+      <div style="overflow-x:auto;">
+        <table class="g2-sc-table">
+          <thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead>
+          <tbody>${battingRows}</tbody>
+          <tfoot><tr style="background:rgba(0,0,0,0.2);border-top:1px solid var(--border);">
+            <td style="padding:8px 12px;font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">TOTAL</td>
+            <td style="padding:8px 12px;font-family:JetBrains Mono,monospace;font-size:0.8rem;text-align:right;font-weight:700;">${totalRuns}</td>
+            <td style="padding:8px 12px;font-family:JetBrains Mono,monospace;font-size:0.8rem;text-align:right;">${totalBalls}b</td>
+            <td style="padding:8px 12px;font-family:JetBrains Mono,monospace;font-size:0.8rem;text-align:right;">${totalFours}</td>
+            <td style="padding:8px 12px;font-family:JetBrains Mono,monospace;font-size:0.8rem;text-align:right;">${totalSixes}</td>
+            <td style="padding:8px 12px;font-family:JetBrains Mono,monospace;font-size:0.8rem;text-align:right;color:var(--muted);">${totalWickets} out</td>
+          </tr></tfoot>
+        </table>
+      </div>
+    </div>
+    ${bowlerEntries.length?`
+    <div class="g2-sc-section">
+      <div class="g2-sc-title">⚡ BOWLING FIGURES</div>
+      <div style="overflow-x:auto;">
+        <table class="g2-sc-table">
+          <thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th>Wd</th><th>NB</th><th>Econ</th></tr></thead>
+          <tbody>${bowlingRows}</tbody>
+        </table>
+      </div>
+    </div>`:''}
+  `;
+
   $('escBtn').classList.remove('visible');
   showToast(`${sorted[0].name} wins with ${sorted[0].r} runs!`,4000);
-  
   saveMatchStats();
 }
 
@@ -1234,13 +1475,13 @@ function applyModeUI(){
   if(gully){
     sp.classList.add('gully-panel');sp.classList.remove('g2-panel');
     $('scoringPanelTitle').textContent='🏘️ Gully Score Entry';
-    $('nonStrikerGroup').style.display='none';
+    const nsg=$('nonStrikerGroup');if(nsg)nsg.style.display='none';
     $('historyLabel').textContent='Set History';
     $('currentSetLabel').textContent=`Current Set (Set ${inn()?inn().gullyCurrentSet:1})`;
   }else{
     sp.classList.remove('gully-panel');sp.classList.remove('g2-panel');
     $('scoringPanelTitle').textContent='🎯 Score Entry';
-    $('nonStrikerGroup').style.display='';
+    const nsg=$('nonStrikerGroup');if(nsg)nsg.style.display='';
     $('historyLabel').textContent='Over History';
     $('currentSetLabel').textContent='Current Over';
   }
