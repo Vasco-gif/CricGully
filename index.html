@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0a0e1a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <title>CricScore Live</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CricScore Live</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -365,6 +365,52 @@
     font-weight: 600;
   }
 
+  /* ── PLAYER PROFILES ── */
+  .profile-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;flex-shrink:0;border:2px solid transparent;}
+  .profile-avatar-sm{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;}
+  .profile-setup{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:12px;}
+  .profile-row{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;}
+  .profile-name{font-size:0.82rem;font-weight:600;flex:1;}
+  .color-dots{display:flex;gap:4px;flex-wrap:wrap;}
+  .color-dot{width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform 0.15s;}
+  .color-dot:hover{transform:scale(1.2);}
+  .color-dot.selected{border-color:#fff;transform:scale(1.15);}
+
+  /* ── PARTNERSHIP TRACKER ── */
+  .partnership-bar{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .partnership-label{font-size:0.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+  .partnership-runs{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--accent);line-height:1;}
+  .partnership-detail{font-size:0.72rem;color:var(--muted);margin-top:1px;}
+  .partnership-players{display:flex;gap:8px;align-items:center;margin-left:auto;}
+
+  /* ── PLAYER OF THE MATCH ── */
+  .potm-card{background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(245,158,11,0.06));border:1px solid #f59e0b;border-radius:14px;padding:18px 22px;margin-bottom:16px;display:flex;align-items:center;gap:16px;}
+  .potm-trophy{font-size:2.2rem;}
+  .potm-label{font-size:0.68rem;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px;}
+  .potm-name{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--text);line-height:1;}
+  .potm-reason{font-size:0.75rem;color:var(--muted);margin-top:4px;}
+
+  /* ── MATCH HISTORY MODAL ── */
+  .history-entry{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:8px;cursor:pointer;transition:border-color 0.15s;}
+  .history-entry:hover{border-color:var(--accent);}
+  .history-entry-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .history-date{font-size:0.68rem;color:var(--muted);}
+  .history-format{font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:8px;background:var(--surface3);color:var(--accent);border:1px solid var(--border);}
+  .history-winner{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;color:var(--green);margin-top:4px;}
+  .history-detail{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+  .history-sc{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:none;}
+  .history-sc.open{display:block;}
+  .history-sc-table{width:100%;border-collapse:collapse;font-size:0.75rem;}
+  .history-sc-table th{color:var(--muted);font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;padding:4px 8px;text-align:left;background:rgba(0,0,0,0.2);}
+  .history-sc-table th:not(:first-child){text-align:right;}
+  .history-sc-table td{padding:5px 8px;border-top:1px solid rgba(255,255,255,0.04);}
+  .history-sc-table td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;}
+  #historyList{max-height:55vh;overflow-y:auto;padding-right:4px;}
+
+  /* ── HIGHEST SCORE HIGHLIGHT (G2) ── */
+  .g2-lb-row.top-scorer{background:rgba(251,191,36,0.06);border-left:3px solid #f59e0b;}
+  .fire-badge{background:rgba(251,191,36,0.2);border:1px solid #f59e0b;color:#fbbf24;font-size:0.65rem;padding:2px 7px;border-radius:8px;font-weight:700;}
+
   /* G2 Final Scorecard */
   .g2-scorecard{margin-top:24px;}
   .g2-sc-section{margin-bottom:20px;}
@@ -480,6 +526,8 @@
 
     <button class="btn-start" onclick="startMatch()">START MATCH</button>
     <button class="btn-stats" onclick="showStatsModal()">📊 VIEW LIFETIME STATS (TOP 5)</button>
+    <button class="btn-stats" onclick="showHistoryModal()" style="border-color:var(--accent);color:var(--accent);margin-top:6px;">📜 MATCH HISTORY</button>
+    <button class="btn-stats" onclick="showProfileModal()" style="border-color:var(--g2);color:var(--g2);margin-top:6px;">🎨 PLAYER PROFILES</button>
   </div>
 
   <div id="scoreboard">
@@ -488,11 +536,27 @@
     <div class="result-banner" id="resultBanner">
       <h2 id="resultText">Match Result</h2>
       <p id="resultDetails"></p>
+      <div id="potmCard" class="potm-card" style="display:none;text-align:left;">
+        <div class="potm-trophy">🏆</div>
+        <div>
+          <div class="potm-label">Player of the Match</div>
+          <div class="potm-name" id="potmName">–</div>
+          <div class="potm-reason" id="potmReason">–</div>
+        </div>
+      </div>
       <button class="btn-exit-home" onclick="goHome()">🏠 HOME / NEW MATCH</button>
     </div>
 
     <div class="g2-result" id="g2ResultBanner">
       <h2>🏆 FINAL LEADERBOARD</h2>
+      <div id="g2PotmCard" class="potm-card" style="display:none;">
+        <div class="potm-trophy">🏆</div>
+        <div>
+          <div class="potm-label">Player of the Match</div>
+          <div class="potm-name" id="g2PotmName">–</div>
+          <div class="potm-reason" id="g2PotmReason">–</div>
+        </div>
+      </div>
       <div class="g2-podium" id="g2Podium"></div>
       <div class="g2-scorecard" id="g2Scorecard"></div>
       <div style="text-align: center;">
@@ -564,6 +628,15 @@
     <div class="over-display" id="overDisplay">
       <div class="section-title" id="currentSetLabel">Current Over</div>
       <div class="over-balls-wrap"><div class="over-balls" id="overBalls"></div></div>
+    </div>
+
+    <div id="partnershipBar" style="display:none;" class="partnership-bar">
+      <div>
+        <div class="partnership-label">Partnership</div>
+        <div class="partnership-runs" id="partnerRuns">0</div>
+        <div class="partnership-detail" id="partnerBalls">0 balls</div>
+      </div>
+      <div class="partnership-players" id="partnerPlayers"></div>
     </div>
 
     <div id="standardBattingSection">
@@ -698,6 +771,29 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="historyModal">
+  <div class="modal" style="width:520px;">
+    <h3 style="color:var(--accent);">📜 Match History</h3>
+    <p style="color:var(--muted);font-size:0.82rem;margin-bottom:14px;">All completed matches on this device. Tap a match to expand scorecard.</p>
+    <div id="historyList"></div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button class="btn-cancel" onclick="closeHistoryModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="profileModal">
+  <div class="modal">
+    <h3 style="color:var(--g2);">🎨 Player Profiles</h3>
+    <p style="color:var(--muted);font-size:0.82rem;margin-bottom:14px;">Pick a colour for each player — shown in leaderboards and scorecards.</p>
+    <div class="profile-setup" id="profileSetupList"></div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button class="btn-confirm" style="background:linear-gradient(135deg,var(--g2),var(--g2-dark));" onclick="saveProfiles()">SAVE PROFILES</button>
+      <button class="btn-cancel" onclick="closeProfileModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -720,41 +816,72 @@ function saveMatchStats() {
   let matchData = {
     date: new Date().toISOString(),
     format: matchFormat,
-    players: {}, 
-    bowlers: {}  
+    players: {},
+    bowlers: {},
+    summary: null // { winner, detail, teams }
   };
 
   if (matchFormat === 'gully2' && g2State) {
+    const sorted=[...g2State.players].sort((a,b)=>b.r-a.r||(a.b-b.b));
     g2State.players.forEach(p => {
-      matchData.players[p.name] = { 
-        r: p.r, 
-        b: p.b,
-        ducks: (p.r === 0 && p.out) ? 1 : 0 
-      };
+      matchData.players[p.name] = { r: p.r, b: p.b, ducks: (p.r===0&&p.out)?1:0, fours:p.fours, sixes:p.sixes, out:p.out, outDesc:p.outDesc };
     });
     Object.entries(g2State.bowlers).forEach(([name, s]) => {
-      matchData.bowlers[name] = { runs: s.runs, wickets: s.wickets, balls: s.balls };
+      matchData.bowlers[name] = { runs: s.runs, wickets: s.wickets, balls: s.balls, wides:s.wides||0, noballs:s.noballs||0 };
     });
+    matchData.summary = {
+      mode: 'gully2',
+      winner: sorted[0].name,
+      detail: `${sorted[0].r} runs · SR ${sorted[0].b>0?((sorted[0].r/sorted[0].b)*100).toFixed(1):'0.0'}`,
+      playerCount: g2State.players.length,
+      playerNames: g2State.players.map(p=>p.name)
+    };
   } else if (match) {
     innings.forEach(inn => {
       if (!inn) return;
       Object.keys(inn.batsmen).forEach(name => {
-        if (!matchData.players[name]) matchData.players[name] = {r: 0, b: 0, ducks: 0};
-        
+        if (!matchData.players[name]) matchData.players[name] = {r:0,b:0,ducks:0,fours:0,sixes:0};
         matchData.players[name].r += inn.batsmen[name].r;
         matchData.players[name].b += inn.batsmen[name].b;
-        
-        if (inn.batsmen[name].r === 0 && inn.batsmen[name].out) {
-          matchData.players[name].ducks += 1;
-        }
+        matchData.players[name].fours = (matchData.players[name].fours||0) + (inn.batsmen[name].fours||0);
+        matchData.players[name].sixes = (matchData.players[name].sixes||0) + (inn.batsmen[name].sixes||0);
+        if (inn.batsmen[name].r===0&&inn.batsmen[name].out) matchData.players[name].ducks+=1;
       });
       Object.keys(inn.bowlers).forEach(name => {
-        if (!matchData.bowlers[name]) matchData.bowlers[name] = {runs: 0, wickets: 0, balls: 0};
+        if (!matchData.bowlers[name]) matchData.bowlers[name] = {runs:0,wickets:0,balls:0};
         matchData.bowlers[name].runs += inn.bowlers[name].runs;
         matchData.bowlers[name].wickets += inn.bowlers[name].wickets;
         matchData.bowlers[name].balls += inn.bowlers[name].balls;
       });
     });
+    // Build result summary
+    let winner='', detail='';
+    if(match.format==='test'){
+      const totals=[0,0];innings.forEach(inn=>{if(inn)totals[inn.battingTeam]+=inn.runs;});
+      const t1=match.battingFirst===0?match.team1:match.team2;
+      const t2=match.battingFirst===0?match.team2:match.team1;
+      if(totals[0]>totals[1]){winner=t1;detail=`by ${totals[0]-totals[1]} runs`;}
+      else if(totals[1]>totals[0]){winner=t2;detail=`by ${totals[1]-totals[0]} runs`;}
+      else{winner='Draw';detail='Match drawn';}
+    } else {
+      const i1=innings[0],i2=innings[1];
+      if(i2){
+        const t1=i1.battingTeam===0?match.team1:match.team2;
+        const t2=i2.battingTeam===0?match.team1:match.team2;
+        const target=i1.runs+1;
+        if(i2.runs>=target){winner=t2;detail=`by ${(match.pc-1)-i2.wickets} wkts`;}
+        else if(i1.runs>i2.runs){winner=t1;detail=`by ${i1.runs-i2.runs} runs`;}
+        else{winner='Tie';detail='Match tied';}
+      }
+    }
+    matchData.summary = {
+      mode: 'teams',
+      winner, detail,
+      team1: match.team1, team2: match.team2,
+      score1: innings[0]?`${innings[0].runs}/${innings[0].wickets}`:'–',
+      score2: innings[1]?`${innings[1].runs}/${innings[1].wickets}`:'–',
+      format: match.format
+    };
   }
 
   history.push(matchData);
@@ -1969,16 +2096,341 @@ function declare(){
   showToast(`Innings declared at ${i.runs}/${i.wickets}`);
 }
 window.declare=declare;
+
+// ══════════════════════════════════════════════════════════
+// ── 1. PLAYER PROFILES ───────────────────────────────────
+// ══════════════════════════════════════════════════════════
+const AVATAR_COLORS=[
+  {bg:'#3b82f6',border:'#60a5fa',label:'Blue'},
+  {bg:'#22c55e',border:'#4ade80',label:'Green'},
+  {bg:'#ef4444',border:'#f87171',label:'Red'},
+  {bg:'#f59e0b',border:'#fbbf24',label:'Yellow'},
+  {bg:'#a855f7',border:'#c084fc',label:'Purple'},
+  {bg:'#e879f9',border:'#f0abfc',label:'Pink'},
+  {bg:'#06b6d4',border:'#67e8f9',label:'Cyan'},
+  {bg:'#f97316',border:'#fb923c',label:'Orange'},
+  {bg:'#14b8a6',border:'#5eead4',label:'Teal'},
+  {bg:'#ec4899',border:'#f472b6',label:'Rose'},
+];
+let playerProfiles=JSON.parse(localStorage.getItem('cricscore_profiles')||'{}');
+// colorIdx per player name
+function getProfile(name){
+  if(playerProfiles[name]!==undefined)return AVATAR_COLORS[playerProfiles[name]%AVATAR_COLORS.length];
+  // deterministic fallback by name hash
+  let h=0;for(let c of name)h=(h*31+c.charCodeAt(0))&0xffff;
+  return AVATAR_COLORS[h%AVATAR_COLORS.length];
+}
+function avatarHtml(name,size='md'){
+  const p=getProfile(name);
+  const cls=size==='sm'?'profile-avatar-sm':'profile-avatar';
+  const initials=name.split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase()||'?';
+  return `<div class="${cls}" style="background:${p.bg};border-color:${p.border};color:#fff;">${initials}</div>`;
+}
+function showProfileModal(){
+  // Collect all known player names from current match / g2 / history
+  const names=new Set();
+  if(match){match.teams.forEach(t=>t.forEach(n=>names.add(n)));}
+  if(g2State){g2State.players.forEach(p=>names.add(p.name));}
+  const history=JSON.parse(localStorage.getItem('cricscore_history')||'[]');
+  history.forEach(m=>{
+    if(m.summary?.playerNames)m.summary.playerNames.forEach(n=>names.add(n));
+    if(m.players)Object.keys(m.players).forEach(n=>names.add(n));
+  });
+  if(!names.size){showToast('No players found yet. Start a match first!');return;}
+  const list=$('profileSetupList');list.innerHTML='';
+  [...names].sort().forEach(name=>{
+    const cur=playerProfiles[name]??AVATAR_COLORS.findIndex(c=>c===getProfile(name));
+    const dots=AVATAR_COLORS.map((c,i)=>`<div class="color-dot${i===cur?' selected':''}" style="background:${c.bg};border-color:${i===cur?'#fff':c.bg};" onclick="selectProfileColor('${name.replace(/'/g,"\\'")}',${i},this)"></div>`).join('');
+    list.innerHTML+=`<div class="profile-row">${avatarHtml(name)}<span class="profile-name">${name}</span><div class="color-dots">${dots}</div></div>`;
+  });
+  $('profileModal').classList.add('open');
+}
+function selectProfileColor(name,idx,el){
+  playerProfiles[name]=idx;
+  el.closest('.color-dots').querySelectorAll('.color-dot').forEach((d,i)=>{
+    d.classList.toggle('selected',i===idx);
+    d.style.borderColor=i===idx?'#fff':AVATAR_COLORS[i].bg;
+  });
+  const row=el.closest('.profile-row');
+  const av=row.querySelector('.profile-avatar,.profile-avatar-sm');
+  const p=AVATAR_COLORS[idx];
+  av.style.background=p.bg;av.style.borderColor=p.border;
+}
+function saveProfiles(){
+  localStorage.setItem('cricscore_profiles',JSON.stringify(playerProfiles));
+  closeProfileModal();
+  showToast('Profiles saved!');
+  if(match)renderAll();
+  if(g2State)renderG2();
+}
+function closeProfileModal(){$('profileModal').classList.remove('open');}
+
+// ══════════════════════════════════════════════════════════
+// ── 2. PARTNERSHIP TRACKER ───────────────────────────────
+// ══════════════════════════════════════════════════════════
+// Stored on each innings: partnership = {runs, balls, s, ns}
+function resetPartnership(i){i.partnership={runs:0,balls:0,s:i.currentPair?.[0]||'',ns:i.currentPair?.[1]||''};}
+function addToPartnership(i,runs,balls=1){
+  if(!i.partnership)resetPartnership(i);
+  i.partnership.runs+=runs;i.partnership.balls+=balls;
+}
+function renderPartnershipBar(){
+  const bar=$('partnershipBar');
+  if(!match||!inn()||isGullyTeam()){bar.style.display='none';return;}
+  const i=inn();
+  if(!i.partnership||i.completed){bar.style.display='none';return;}
+  const p=i.partnership;
+  if(!p.s&&!p.ns){bar.style.display='none';return;}
+  bar.style.display='flex';
+  $('partnerRuns').textContent=p.runs;
+  $('partnerBalls').textContent=`${p.balls} ball${p.balls!==1?'s':''}`;
+  const pp=$('partnerPlayers');pp.innerHTML='';
+  [p.s,p.ns].filter(Boolean).forEach(name=>{
+    const wrap=document.createElement('div');
+    wrap.style.cssText='display:flex;align-items:center;gap:5px;';
+    wrap.innerHTML=`${avatarHtml(name,'sm')}<span style="font-size:0.78rem;font-weight:600;">${name}</span>`;
+    pp.appendChild(wrap);
+  });
+}
+// Hook into addBall to update partnership
+const _origAddBall=addBall;
+window.addBall=function(runs){
+  _origAddBall(runs);
+  if(match&&!isGullyTeam()){const i=inn();if(i&&!i.completed)addToPartnership(i,runs);}
+};
+// Hook into addExtra similarly
+const _origAddExtra=addExtra;
+window.addExtra=function(type){
+  _origAddExtra(type);
+  if(match&&!isGullyTeam()){
+    const i=inn();if(i&&!i.completed){
+      if(['LB','BYE'].includes(type))addToPartnership(i,1);
+      else if(['WD','NB'].includes(type))addToPartnership(i,1,0);
+    }
+  }
+};
+// Reset partnership on wicket in confirmWicket - patch renderAll to also render partnership
+const _origRenderAll=renderAll;
+window.renderAll=function(){
+  _origRenderAll();
+  renderPartnershipBar();
+};
+
+// ══════════════════════════════════════════════════════════
+// ── 3. HIGHEST SCORE HIGHLIGHT (G2) ──────────────────────
+// ══════════════════════════════════════════════════════════
+// Patches into renderG2 leaderboard row building
+const _origRenderG2=renderG2;
+window.renderG2=function(){
+  _origRenderG2();
+  // After render, add avatar + fire badge to top scorer row
+  if(!g2State||!g2State.started)return;
+  const lbRows=$('g2LeaderboardRows');
+  const rows=lbRows.querySelectorAll('.g2-lb-row');
+  if(!rows.length)return;
+  // The sorted order: first row is rank #1 (top scorer)
+  // Find top scorer among players who have already batted (done) or are currently batting
+  const active=g2State.players.filter(p=>p.done||(p.name===g2CurrentBatter().name));
+  if(!active.length)return;
+  const topR=Math.max(...active.map(p=>p.r));
+  // Mark leaderboard rows with avatar and fire badge for current leader
+  rows.forEach(row=>{
+    const nameEl=row.querySelector('.g2-lb-name');
+    if(!nameEl)return;
+    const name=nameEl.textContent;
+    const p=g2State.players.find(pl=>pl.name===name);
+    if(!p)return;
+    // Add avatar before name if not already there
+    if(!row.querySelector('.profile-avatar-sm')){
+      const av=document.createElement('span');
+      av.innerHTML=avatarHtml(name,'sm');
+      row.insertBefore(av.firstChild,nameEl);
+    }
+    // Fire badge for top scorer (done or batting, at least 1 run)
+    const existingBadge=row.querySelector('.fire-badge');
+    if(existingBadge)existingBadge.remove();
+    row.classList.remove('top-scorer');
+    if(p.r===topR&&topR>0&&(p.done||(g2State.started&&p.name===g2CurrentBatter().name))){
+      row.classList.add('top-scorer');
+      const badge=document.createElement('span');
+      badge.className='fire-badge';badge.textContent='🔥 LEADING';
+      nameEl.after(badge);
+    }
+  });
+};
+
+// ══════════════════════════════════════════════════════════
+// ── 4. PLAYER OF THE MATCH ───────────────────────────────
+// ══════════════════════════════════════════════════════════
+function calcPotm(){
+  // Standard match POTM
+  if(match){
+    let candidates=[];
+    innings.forEach(inn=>{
+      if(!inn)return;
+      Object.entries(inn.batsmen).forEach(([name,s])=>{
+        let score=s.r+(s.fours||0)*0.5+(s.sixes||0)*1;
+        candidates.push({name,score,reason:`${s.r} runs${s.fours?', '+s.fours+' fours':''}${s.sixes?', '+s.sixes+' sixes':''}`});
+      });
+      Object.entries(inn.bowlers).forEach(([name,s])=>{
+        if(!s.wickets)return;
+        const econ=s.balls>0?(s.runs/s.balls)*6:99;
+        let score=s.wickets*25+(6-Math.min(econ,6))*3;
+        candidates.push({name,score,reason:`${s.wickets} wkt${s.wickets!==1?'s':''} for ${s.runs} runs`});
+      });
+    });
+    if(!candidates.length)return null;
+    candidates.sort((a,b)=>b.score-a.score);
+    return candidates[0];
+  }
+  // Gully 2 POTM
+  if(g2State){
+    let best=null;
+    // Best batter: most runs
+    const topBat=[...g2State.players].sort((a,b)=>b.r-a.r)[0];
+    if(topBat&&topBat.r>0){
+      const sr=topBat.b>0?((topBat.r/topBat.b)*100).toFixed(1):'0';
+      best={name:topBat.name,reason:`Top scorer · ${topBat.r} runs · SR ${sr}`,score:topBat.r};
+    }
+    // Best bowler: most wickets, tiebreak economy
+    const bowlEntries=Object.entries(g2State.bowlers).filter(([,s])=>s.wickets>0);
+    if(bowlEntries.length){
+      bowlEntries.sort((a,b)=>b[1].wickets-a[1].wickets||(a[1].balls&&b[1].balls?(a[1].runs/a[1].balls)-(b[1].runs/b[1].balls):0));
+      const [bName,bs]=bowlEntries[0];
+      const bScore=bs.wickets*20+(10-Math.min((bs.runs/Math.max(bs.balls,1))*6,10))*1;
+      if(!best||bScore>best.score){
+        const econ=bs.balls>0?((bs.runs/bs.balls)*6).toFixed(2):'–';
+        best={name:bName,reason:`Best bowler · ${bs.wickets}W for ${bs.runs}R · Econ ${econ}`,score:bScore};
+      }
+    }
+    return best;
+  }
+  return null;
+}
+function showPotm(cardId,nameId,reasonId){
+  const potm=calcPotm();
+  if(!potm){$(cardId).style.display='none';return;}
+  $(cardId).style.display='flex';
+  $(nameId).textContent=potm.name;
+  $(reasonId).textContent=potm.reason;
+  // Add avatar to card
+  const existing=$(cardId).querySelector('.profile-avatar');
+  if(existing)existing.remove();
+  const av=document.createElement('span');
+  av.innerHTML=avatarHtml(potm.name,'md');
+  $(cardId).insertBefore(av.firstChild,$(cardId).querySelector('div'));
+}
+// Patch result display functions to call showPotm
+const _origCheckInningsEnd=checkInningsEnd;
+window.checkInningsEnd=function(i){
+  _origCheckInningsEnd(i);
+};
+// Patch the standard result display
+const _origResultBanner=$('resultBanner');
+// We hook via MutationObserver on resultBanner becoming visible
+new MutationObserver(()=>{
+  if($('resultBanner').style.display==='block')showPotm('potmCard','potmName','potmReason');
+}).observe($('resultBanner'),{attributes:true,attributeFilter:['style']});
+new MutationObserver(()=>{
+  if($('g2ResultBanner').style.display==='block')showPotm('g2PotmCard','g2PotmName','g2PotmReason');
+}).observe($('g2ResultBanner'),{attributes:true,attributeFilter:['style']});
+
+// ══════════════════════════════════════════════════════════
+// ── 5. MATCH HISTORY ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+function showHistoryModal(){
+  const history=JSON.parse(localStorage.getItem('cricscore_history')||'[]');
+  const list=$('historyList');
+  if(!history.length){list.innerHTML='<div style="color:var(--muted);text-align:center;padding:20px;">No matches yet. Complete a match to see it here!</div>';$('historyModal').classList.add('open');return;}
+  list.innerHTML='';
+  [...history].reverse().forEach((m,revIdx)=>{
+    const idx=history.length-1-revIdx;
+    const s=m.summary;
+    const date=new Date(m.date);
+    const dateStr=date.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+' '+date.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    let topLine='',subLine='',scHtml='';
+    if(s?.mode==='gully2'){
+      topLine=`🏆 ${s.winner} wins`;
+      subLine=`Gully 2 · ${s.playerCount} players · ${s.detail}`;
+      // Build mini scorecard
+      const pRows=Object.entries(m.players||{}).sort((a,b)=>b[1].r-a[1].r).map(([name,p])=>{
+        const sr=p.b>0?((p.r/p.b)*100).toFixed(1):'–';
+        const av=avatarHtml(name,'sm');
+        return `<tr><td style="display:flex;align-items:center;gap:5px;">${av}<span>${name}</span></td><td>${p.r}</td><td>${p.b}</td><td>${sr}</td></tr>`;
+      }).join('');
+      const bRows=Object.entries(m.bowlers||{}).sort((a,b)=>b[1].wickets-a[1].wickets).map(([name,b])=>{
+        const econ=b.balls>0?((b.runs/b.balls)*6).toFixed(2):'–';
+        return `<tr><td>${name}</td><td>${b.wickets}</td><td>${b.runs}</td><td>${econ}</td></tr>`;
+      }).join('');
+      scHtml=`<div class="history-sc" id="hsc${idx}">
+        <table class="history-sc-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>SR</th></tr></thead><tbody>${pRows}</tbody></table>
+        ${bRows?`<table class="history-sc-table" style="margin-top:8px;"><thead><tr><th>Bowler</th><th>W</th><th>R</th><th>Econ</th></tr></thead><tbody>${bRows}</tbody></table>`:''}
+      </div>`;
+    } else if(s?.mode==='teams'){
+      topLine=`🏆 ${s.winner}${s.winner==='Draw'||s.winner==='Tie'?'':' wins'} ${s.detail}`;
+      subLine=`${s.team1} ${s.score1} vs ${s.team2} ${s.score2} · ${(s.format||m.format||'').toUpperCase()}`;
+      // Mini batting scorecards per team
+      const p1=Object.entries(m.players||{}).sort((a,b)=>b[1].r-a[1].r).slice(0,5);
+      const pRows=p1.map(([name,p])=>{
+        const sr=p.b>0?((p.r/p.b)*100).toFixed(1):'–';
+        return `<tr><td style="display:flex;align-items:center;gap:5px;">${avatarHtml(name,'sm')}<span>${name}</span></td><td>${p.r}</td><td>${p.b}</td><td>${sr}</td></tr>`;
+      }).join('');
+      const bRows=Object.entries(m.bowlers||{}).filter(([,b])=>b.wickets>0).sort((a,b)=>b[1].wickets-a[1].wickets).slice(0,5).map(([name,b])=>{
+        const econ=b.balls>0?((b.runs/b.balls)*6).toFixed(2):'–';
+        return `<tr><td>${name}</td><td>${b.wickets}</td><td>${b.runs}</td><td>${econ}</td></tr>`;
+      }).join('');
+      scHtml=`<div class="history-sc" id="hsc${idx}">
+        ${pRows?`<table class="history-sc-table"><thead><tr><th>Top Batters</th><th>R</th><th>B</th><th>SR</th></tr></thead><tbody>${pRows}</tbody></table>`:''}
+        ${bRows?`<table class="history-sc-table" style="margin-top:8px;"><thead><tr><th>Top Bowlers</th><th>W</th><th>R</th><th>Econ</th></tr></thead><tbody>${bRows}</tbody></table>`:''}
+      </div>`;
+    } else {
+      topLine=`Match #${idx+1}`;
+      subLine=(m.format||'').toUpperCase();
+    }
+    const entry=document.createElement('div');
+    entry.className='history-entry';
+    entry.innerHTML=`
+      <div class="history-entry-top">
+        <span class="history-format">${(m.format||'?').toUpperCase()}</span>
+        <span class="history-date">${dateStr}</span>
+      </div>
+      <div class="history-winner">${topLine}</div>
+      <div class="history-detail">${subLine}</div>
+      ${scHtml}`;
+    if(scHtml){
+      entry.style.cursor='pointer';
+      entry.onclick=()=>{const sc=$(`hsc${idx}`);sc.classList.toggle('open');};
+    }
+    list.appendChild(entry);
+  });
+  $('historyModal').classList.add('open');
+}
+function closeHistoryModal(){$('historyModal').classList.remove('open');}
+// Escape key for new modals
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if($('historyModal').classList.contains('open'))closeHistoryModal();
+    if($('profileModal').classList.contains('open'))closeProfileModal();
+  }
+});
+// Re-render partnership bar on wicket reset
+const _origConfirmWicket=confirmWicket;
+window.confirmWicket=function(){
+  _origConfirmWicket();
+  if(match&&!isGullyTeam()){const i=inn();if(i)resetPartnership(i);}
+};
 </script>
 <script>
-    // Register Service Worker for Offline Support
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(registration => console.log('ServiceWorker registered successfully'))
-          .catch(err => console.log('ServiceWorker registration failed: ', err));
-      });
-    }
-  </script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      // Skip SW registration in sandboxed preview environments (e.g. claudeusercontent.com)
+      const isPreview = location.hostname.includes('claudeusercontent.com') || location.protocol === 'blob:' || location.hostname === '';
+      if (isPreview) return;
+      navigator.serviceWorker.register('./sw.js')
+        .then(() => console.log('ServiceWorker registered'))
+        .catch(err => console.warn('ServiceWorker not available:', err.message));
+    });
+  }
+</script>
 </body>
 </html>
