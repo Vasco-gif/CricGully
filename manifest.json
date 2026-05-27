@@ -1,14 +1,14 @@
 {
-  "name": "CricScore",
+  "name": "CricScore Live",
   "short_name": "CricScore",
-  "start_url": "./",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0a0e1a",
   "theme_color": "#0a0e1a",
   "icons": [
     {
       "src": "icon.png",
-      "sizes": "512x512",
+      "sizes": "192x192 512x512",
       "type": "image/png"
     }
   ]
