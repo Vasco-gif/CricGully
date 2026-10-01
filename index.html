@@ -439,13 +439,144 @@
     .g2-batter-stats{gap:12px;}
     .stats-grid{grid-template-columns:1fr;}
   }
+
+  /* ── AUTH / LOGIN ── */
+  .auth-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:500;align-items:center;justify-content:center;flex-direction:column;}
+  .auth-screen.open{display:flex;}
+  .auth-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 32px;width:380px;max-width:94vw;animation:fadeUp 0.3s ease;}
+  .auth-logo{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:3px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px;}
+  .auth-tagline{text-align:center;color:var(--muted);font-size:0.8rem;margin-bottom:28px;}
+  .auth-tabs{display:flex;gap:2px;margin-bottom:24px;background:var(--surface2);border-radius:10px;padding:4px;}
+  .auth-tab{flex:1;padding:8px;text-align:center;border-radius:8px;cursor:pointer;font-size:0.85rem;font-weight:600;color:var(--muted);transition:all 0.2s;border:none;background:none;}
+  .auth-tab.active{background:var(--surface3);color:var(--text);}
+  .auth-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:12px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:12px;transition:border-color 0.2s;}
+  .auth-input:focus{border-color:var(--accent);}
+  .auth-input::placeholder{color:var(--muted);}
+  .btn-auth{width:100%;background:linear-gradient(135deg,var(--accent),#0096c7);border:none;color:#000;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;padding:13px;border-radius:8px;cursor:pointer;margin-top:4px;transition:transform 0.15s;}
+  .btn-auth:hover{transform:translateY(-2px);}
+  .btn-auth:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+  .auth-err{color:#f87171;font-size:0.8rem;margin-bottom:10px;min-height:18px;text-align:center;}
+  .btn-skip{width:100%;background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:10px;border-radius:8px;cursor:pointer;margin-top:8px;}
+  .btn-skip:hover{border-color:var(--muted);color:var(--text);}
+  .auth-user-chip{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px 4px 4px;cursor:pointer;transition:border-color 0.2s;}
+  .auth-user-chip:hover{border-color:var(--accent);}
+  .auth-avatar{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:#000;}
+  .auth-username{font-size:0.75rem;font-weight:600;}
+
+  /* ── BACK / RELOAD WARNING ── */
+  .warn-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:600;align-items:center;justify-content:center;}
+  .warn-overlay.open{display:flex;}
+  .warn-box{background:var(--surface);border:2px solid #ef4444;border-radius:16px;padding:32px;width:340px;max-width:92vw;text-align:center;animation:fadeUp 0.25s ease;}
+  .warn-box h3{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:#f87171;margin-bottom:10px;}
+  .warn-box p{color:var(--muted);font-size:0.87rem;margin-bottom:22px;line-height:1.5;}
+  .warn-btns{display:flex;gap:10px;}
+  .btn-warn-stay{flex:2;background:linear-gradient(135deg,var(--accent),#0096c7);border:none;color:#000;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1.5px;padding:12px;border-radius:8px;cursor:pointer;}
+  .btn-warn-leave{flex:1;background:rgba(239,68,68,0.1);border:2px solid rgba(239,68,68,0.5);color:#f87171;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;padding:12px;border-radius:8px;cursor:pointer;}
+
+  /* ── FULL HISTORY MODAL ── */
+  .full-history-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);z-index:200;align-items:flex-start;justify-content:center;padding:20px 12px;overflow-y:auto;}
+  .full-history-modal.open{display:flex;}
+  .fh-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;width:700px;max-width:100%;margin:auto;animation:fadeUp 0.3s ease;}
+  .fh-header{padding:24px 28px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .fh-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:var(--accent);}
+  .fh-close{background:var(--surface2);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
+  .fh-list{padding:16px 24px;max-height:70vh;overflow-y:auto;}
+  .fh-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color 0.2s;}
+  .fh-card:hover{border-color:var(--accent);}
+  .fh-card-header{padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;}
+  .fh-fmt{font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--surface3);color:var(--accent);border:1px solid var(--border);text-transform:uppercase;letter-spacing:1px;}
+  .fh-winner{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;color:var(--green);flex:1;}
+  .fh-date{font-size:0.68rem;color:var(--muted);}
+  .fh-detail{font-size:0.75rem;color:var(--muted);}
+  .fh-cloud{font-size:0.7rem;color:var(--accent);margin-left:4px;}
+  .fh-body{display:none;padding:0 18px 16px;border-top:1px solid var(--border);}
+  .fh-body.open{display:block;}
+  .fh-sc-title{font-size:0.72rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px;display:flex;align-items:center;gap:8px;}
+  .fh-sc-title::after{content:'';flex:1;height:1px;background:var(--border);}
+  .fh-table{width:100%;border-collapse:collapse;font-size:0.8rem;margin-bottom:4px;}
+  .fh-table th{color:var(--muted);font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;padding:6px 10px;text-align:left;background:rgba(0,0,0,0.2);}
+  .fh-table th:not(:first-child){text-align:right;}
+  .fh-table td{padding:7px 10px;border-top:1px solid rgba(255,255,255,0.04);}
+  .fh-table td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-size:0.75rem;}
+  .fh-action-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+  .btn-dl-pdf{flex:1;min-width:120px;background:rgba(239,68,68,0.1);border:2px solid rgba(239,68,68,0.5);color:#f87171;font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:1.5px;padding:10px;border-radius:8px;cursor:pointer;transition:all 0.15s;}
+  .btn-dl-pdf:hover{background:rgba(239,68,68,0.2);}
+  .btn-share-wa{flex:1;min-width:120px;background:rgba(37,211,102,0.1);border:2px solid rgba(37,211,102,0.5);color:#25d366;font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:1.5px;padding:10px;border-radius:8px;cursor:pointer;transition:all 0.15s;}
+  .btn-share-wa:hover{background:rgba(37,211,102,0.2);}
+
+  /* ── MILESTONE TOAST ── */
+  .milestone-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(245,158,11,0.1));border:2px solid #fbbf24;border-radius:16px;padding:20px 32px;text-align:center;z-index:400;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);}
+  .milestone-toast.show{transform:translate(-50%,-50%) scale(1);}
+  .milestone-emoji{font-size:2.5rem;display:block;margin-bottom:6px;}
+  .milestone-text{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;color:#fbbf24;}
+  .milestone-sub{font-size:0.78rem;color:var(--muted);margin-top:4px;}
+
+  /* ── RESULT PDF BUTTON ── */
+  .result-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;justify-content:center;}
+  .btn-result-pdf{background:rgba(239,68,68,0.1);border:2px solid rgba(239,68,68,0.5);color:#f87171;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1.5px;padding:10px 20px;border-radius:8px;cursor:pointer;}
+  .btn-result-wa{background:rgba(37,211,102,0.1);border:2px solid rgba(37,211,102,0.4);color:#25d366;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1.5px;padding:10px 20px;border-radius:8px;cursor:pointer;}
 </style>
 </head>
 <body>
+<!-- ── AUTH SCREEN ── -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-box">
+    <div class="auth-logo">🏏 CricScore</div>
+    <div class="auth-tagline">Sign in to sync match history across all your devices</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Login</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Register</button>
+    </div>
+    <div class="auth-err" id="authErr"></div>
+    <input class="auth-input" id="authUsername" type="text" placeholder="Username" autocomplete="username" autocapitalize="none">
+    <input class="auth-input" id="authPassword" type="password" placeholder="Password" autocomplete="current-password">
+    <div id="authConfirmWrap" style="display:none;"><input class="auth-input" id="authConfirm" type="password" placeholder="Confirm Password"></div>
+    <button class="btn-auth" id="authSubmitBtn" onclick="submitAuth()">LOGIN</button>
+    <button class="btn-skip" onclick="skipAuth()">Continue without account (local only)</button>
+  </div>
+</div>
+
+<!-- ── BACK / RELOAD WARNING ── -->
+<div class="warn-overlay" id="warnOverlay">
+  <div class="warn-box">
+    <h3>⚠ MATCH IN PROGRESS</h3>
+    <p>You are about to leave the current match. All unsaved scoring data will be lost!</p>
+    <div class="warn-btns">
+      <button class="btn-warn-stay" onclick="dismissWarn()">▶ STAY IN MATCH</button>
+      <button class="btn-warn-leave" onclick="confirmWarnLeave()">Leave</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── FULL HISTORY MODAL ── -->
+<div class="full-history-modal" id="fullHistoryModal">
+  <div class="fh-box">
+    <div class="fh-header">
+      <div>
+        <div class="fh-title">📜 MATCH HISTORY</div>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;" id="fhSubtitle">Last 10 matches · Tap to expand full scorecard</div>
+      </div>
+      <button class="fh-close" onclick="closeFullHistory()">✕</button>
+    </div>
+    <div class="fh-list" id="fhList"></div>
+  </div>
+</div>
+
+<!-- ── MILESTONE TOAST ── -->
+<div class="milestone-toast" id="milestoneBanner">
+  <span class="milestone-emoji" id="milestoneEmoji">🎉</span>
+  <div class="milestone-text" id="milestoneText">FIFTY!</div>
+  <div class="milestone-sub" id="milestoneSub"></div>
+</div>
+
 <div class="wrapper">
   <header>
     <div class="logo">🏏 CricScore</div>
     <div class="header-right">
+      <div class="auth-user-chip" id="userChip" onclick="showAuthOrProfile()" style="display:none;">
+        <div class="auth-avatar" id="userAvatar">?</div>
+        <span class="auth-username" id="userChipName">User</span>
+      </div>
       <button class="esc-btn" id="escBtn" onclick="openEscMenu()">⏸ ESC / MENU</button>
       <div class="live-badge"><div class="live-dot"></div> Live</div>
     </div>
@@ -526,7 +657,7 @@
 
     <button class="btn-start" onclick="startMatch()">START MATCH</button>
     <button class="btn-stats" onclick="showStatsModal()">📊 VIEW LIFETIME STATS (TOP 5)</button>
-    <button class="btn-stats" onclick="showHistoryModal()" style="border-color:var(--accent);color:var(--accent);margin-top:6px;">📜 MATCH HISTORY</button>
+    <button class="btn-stats" onclick="openFullHistory()" style="border-color:var(--accent);color:var(--accent);margin-top:6px;">📜 MATCH HISTORY (LAST 10)</button>
     <button class="btn-stats" onclick="showProfileModal()" style="border-color:var(--g2);color:var(--g2);margin-top:6px;">🎨 PLAYER PROFILES</button>
   </div>
 
@@ -544,7 +675,11 @@
           <div class="potm-reason" id="potmReason">–</div>
         </div>
       </div>
-      <button class="btn-exit-home" onclick="goHome()">🏠 HOME / NEW MATCH</button>
+      <div class="result-actions">
+        <button class="btn-result-pdf" onclick="downloadScorecardPDF()">📄 DOWNLOAD PDF</button>
+        <button class="btn-result-wa" onclick="shareOnWhatsApp()">📲 SHARE ON WHATSAPP</button>
+      </div>
+      <button class="btn-exit-home" onclick="goHome()" style="margin-top:10px;">🏠 HOME / NEW MATCH</button>
     </div>
 
     <div class="g2-result" id="g2ResultBanner">
@@ -559,8 +694,12 @@
       </div>
       <div class="g2-podium" id="g2Podium"></div>
       <div class="g2-scorecard" id="g2Scorecard"></div>
-      <div style="text-align: center;">
-        <button class="btn-exit-home" onclick="goHome()">🏠 HOME / NEW MATCH</button>
+      <div style="text-align:center;">
+        <div class="result-actions" style="justify-content:center;">
+          <button class="btn-result-pdf" onclick="downloadScorecardPDF()">📄 DOWNLOAD PDF</button>
+          <button class="btn-result-wa" onclick="shareOnWhatsApp()">📲 SHARE ON WHATSAPP</button>
+        </div>
+        <button class="btn-exit-home" onclick="goHome()" style="margin-top:10px;">🏠 HOME / NEW MATCH</button>
       </div>
     </div>
 
@@ -2420,10 +2559,659 @@ window.confirmWicket=function(){
   if(match&&!isGullyTeam()){const i=inn();if(i)resetPartnership(i);}
 };
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// ══════════════════════════════════════════════════════════
+// ── AUTH SYSTEM ───────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+const API = '/api/auth';
+let currentUser = JSON.parse(localStorage.getItem('cs_user') || 'null');
+let authMode = 'login';
+let warnCallback = null;
+
+function initAuth() {
+  if (currentUser) {
+    showUserChip();
+  } else {
+    // Show auth screen on first visit, skip if already dismissed
+    const skipped = localStorage.getItem('cs_auth_skipped');
+    if (!skipped) {
+      document.getElementById('authScreen').classList.add('open');
+    }
+  }
+}
+
+function switchAuthTab(tab) {
+  authMode = tab;
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('authSubmitBtn').textContent = tab === 'login' ? 'LOGIN' : 'CREATE ACCOUNT';
+  document.getElementById('authConfirmWrap').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('authErr').textContent = '';
+}
+
+async function submitAuth() {
+  const username = document.getElementById('authUsername').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const confirm = document.getElementById('authConfirm').value;
+  const errEl = document.getElementById('authErr');
+  const btn = document.getElementById('authSubmitBtn');
+
+  if (!username || !password) { errEl.textContent = 'Please fill all fields'; return; }
+  if (authMode === 'register' && password !== confirm) { errEl.textContent = 'Passwords do not match'; return; }
+
+  btn.disabled = true;
+  btn.textContent = authMode === 'login' ? 'LOGGING IN...' : 'CREATING...';
+  errEl.textContent = '';
+
+  try {
+    const res = await fetch(API + '?action=' + authMode, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, action: authMode })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      errEl.textContent = data.error || 'Something went wrong';
+      btn.disabled = false;
+      btn.textContent = authMode === 'login' ? 'LOGIN' : 'CREATE ACCOUNT';
+      return;
+    }
+    currentUser = { username: username.toLowerCase(), display_name: data.display_name, token: data.token };
+    localStorage.setItem('cs_user', JSON.stringify(currentUser));
+    document.getElementById('authScreen').classList.remove('open');
+    showUserChip();
+    showToast(`Welcome, ${data.display_name}! 🏏`);
+    // Sync any local matches
+    syncLocalMatchesToCloud();
+  } catch (e) {
+    errEl.textContent = 'Network error. Check connection.';
+    btn.disabled = false;
+    btn.textContent = authMode === 'login' ? 'LOGIN' : 'CREATE ACCOUNT';
+  }
+}
+
+function skipAuth() {
+  localStorage.setItem('cs_auth_skipped', '1');
+  document.getElementById('authScreen').classList.remove('open');
+}
+
+function showUserChip() {
+  if (!currentUser) return;
+  const chip = document.getElementById('userChip');
+  chip.style.display = 'flex';
+  document.getElementById('userChipName').textContent = currentUser.display_name || currentUser.username;
+  const av = document.getElementById('userAvatar');
+  av.textContent = (currentUser.display_name || currentUser.username)[0].toUpperCase();
+}
+
+function showAuthOrProfile() {
+  if (!currentUser) {
+    document.getElementById('authScreen').classList.add('open');
+    return;
+  }
+  // Show logout option
+  if (confirm(`Logged in as ${currentUser.display_name}.\n\nLog out?`)) {
+    currentUser = null;
+    localStorage.removeItem('cs_user');
+    document.getElementById('userChip').style.display = 'none';
+    showToast('Logged out');
+  }
+}
+
+async function syncLocalMatchesToCloud() {
+  if (!currentUser) return;
+  const local = JSON.parse(localStorage.getItem('cricscore_history') || '[]');
+  const unsynced = local.filter(m => !m.synced);
+  for (const m of unsynced) {
+    await saveMatchToCloud(m);
+    m.synced = true;
+  }
+  if (unsynced.length) {
+    localStorage.setItem('cricscore_history', JSON.stringify(local));
+  }
+}
+
+async function saveMatchToCloud(matchData) {
+  if (!currentUser) return;
+  try {
+    await fetch(API + '?action=save-match', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-user-token': currentUser.token },
+      body: JSON.stringify({ action: 'save-match', matchData })
+    });
+  } catch (e) { console.warn('Cloud save failed:', e); }
+}
+
+async function getCloudHistory() {
+  if (!currentUser) return null;
+  try {
+    const res = await fetch(API + '?action=get-history&token=' + encodeURIComponent(currentUser.token), {
+      headers: { 'x-user-token': currentUser.token }
+    });
+    const data = await res.json();
+    if (data.success) return data.matches.map(m => ({ ...m.match_data, played_at: m.played_at, fromCloud: true }));
+  } catch (e) { console.warn('Cloud fetch failed:', e); }
+  return null;
+}
+
+// ══════════════════════════════════════════════════════════
+// ── BACK / RELOAD WARNING ─────────────────────────────────
+// ══════════════════════════════════════════════════════════
+let matchActive = false;
+
+function setMatchActive(val) {
+  matchActive = val;
+  if (val) {
+    history.pushState({ matchInProgress: true }, '');
+  }
+}
+
+window.addEventListener('popstate', e => {
+  if (matchActive) {
+    history.pushState({ matchInProgress: true }, '');
+    showWarnOverlay(() => { goHome(); });
+  }
+});
+
+window.addEventListener('beforeunload', e => {
+  if (matchActive) {
+    e.preventDefault();
+    e.returnValue = 'Match in progress! Are you sure you want to leave?';
+    return e.returnValue;
+  }
+});
+
+function showWarnOverlay(cb) {
+  warnCallback = cb;
+  document.getElementById('warnOverlay').classList.add('open');
+}
+function dismissWarn() {
+  document.getElementById('warnOverlay').classList.remove('open');
+  warnCallback = null;
+}
+function confirmWarnLeave() {
+  document.getElementById('warnOverlay').classList.remove('open');
+  matchActive = false;
+  if (warnCallback) { warnCallback(); warnCallback = null; }
+}
+
+// ══════════════════════════════════════════════════════════
+// ── FULL MATCH HISTORY (LAST 10) ──────────────────────────
+// ══════════════════════════════════════════════════════════
+async function openFullHistory() {
+  const modal = document.getElementById('fullHistoryModal');
+  const list = document.getElementById('fhList');
+  const subtitle = document.getElementById('fhSubtitle');
+  list.innerHTML = '<div style="color:var(--muted);text-align:center;padding:30px;">Loading...</div>';
+  modal.classList.add('open');
+
+  let matches = [];
+  let source = 'local';
+
+  if (currentUser) {
+    subtitle.textContent = `Synced matches for ${currentUser.display_name} · Tap to expand`;
+    const cloud = await getCloudHistory();
+    if (cloud && cloud.length) { matches = cloud; source = 'cloud'; }
+  }
+
+  if (!matches.length) {
+    subtitle.textContent = 'Last 10 matches on this device · Tap to expand';
+    const local = JSON.parse(localStorage.getItem('cricscore_history') || '[]');
+    matches = [...local].reverse().slice(0, 10);
+  }
+
+  if (!matches.length) {
+    list.innerHTML = '<div style="color:var(--muted);text-align:center;padding:30px;">No matches yet. Complete a match to see history!</div>';
+    return;
+  }
+
+  list.innerHTML = '';
+  matches.forEach((m, idx) => {
+    const s = m.summary;
+    const date = new Date(m.played_at || m.date);
+    const dateStr = date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) +
+      ' ' + date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+    let winnerLine = '', detailLine = '', bodyHtml = '';
+
+    if (s?.mode === 'gully2') {
+      winnerLine = `🏆 ${s.winner} wins`;
+      detailLine = `Gully 2 · ${s.playerCount} players · ${s.detail}`;
+      const battingRows = Object.entries(m.players || {}).sort((a, b) => b[1].r - a[1].r)
+        .map(([name, p]) => {
+          const sr = p.b > 0 ? ((p.r / p.b) * 100).toFixed(1) : '–';
+          const out = p.out ? `<span style="color:#f87171;font-size:0.68rem;">${p.outDesc || 'out'}</span>` : '<span style="color:#4ade80;font-size:0.68rem;">not out</span>';
+          return `<tr><td><b>${name}</b><br>${out}</td><td>${p.r}</td><td>${p.b}</td><td>${p.fours||0}</td><td>${p.sixes||0}</td><td>${sr}</td></tr>`;
+        }).join('');
+      const bowlRows = Object.entries(m.bowlers || {}).sort((a, b) => b[1].wickets - a[1].wickets)
+        .map(([name, b]) => {
+          const econ = b.balls > 0 ? ((b.runs / b.balls) * 6).toFixed(2) : '–';
+          return `<tr><td>${name}</td><td>${b.wickets}</td><td>${b.runs}</td><td>${b.wides||0}</td><td>${b.noballs||0}</td><td>${econ}</td></tr>`;
+        }).join('');
+      bodyHtml = `
+        <div class="fh-sc-title">🏏 BATTING</div>
+        <table class="fh-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>${battingRows}</tbody></table>
+        ${bowlRows ? `<div class="fh-sc-title">⚡ BOWLING</div><table class="fh-table"><thead><tr><th>Bowler</th><th>W</th><th>R</th><th>Wd</th><th>NB</th><th>Econ</th></tr></thead><tbody>${bowlRows}</tbody></table>` : ''}`;
+    } else if (s?.mode === 'teams') {
+      winnerLine = `🏆 ${s.winner}${['Draw','Tie'].includes(s.winner)?'':' wins'} ${s.detail}`;
+      detailLine = `${s.team1} ${s.score1} vs ${s.team2} ${s.score2} · ${(s.format||m.format||'').toUpperCase()}`;
+      const topBat = Object.entries(m.players || {}).sort((a, b) => b[1].r - a[1].r).slice(0, 8);
+      const topBowl = Object.entries(m.bowlers || {}).filter(([,b]) => b.wickets > 0).sort((a, b) => b[1].wickets - a[1].wickets).slice(0, 6);
+      const batRows = topBat.map(([name, p]) => {
+        const sr = p.b > 0 ? ((p.r / p.b) * 100).toFixed(1) : '–';
+        return `<tr><td>${name}</td><td>${p.r}</td><td>${p.b}</td><td>${p.fours||0}</td><td>${p.sixes||0}</td><td>${sr}</td></tr>`;
+      }).join('');
+      const bowlRows = topBowl.map(([name, b]) => {
+        const overs = b.balls > 0 ? `${Math.floor(b.balls/6)}.${b.balls%6}` : '0.0';
+        const econ = b.balls > 0 ? ((b.runs/b.balls)*6).toFixed(2) : '–';
+        return `<tr><td>${name}</td><td>${overs}</td><td>${b.runs}</td><td>${b.wickets}</td><td>${econ}</td></tr>`;
+      }).join('');
+      bodyHtml = `
+        <div class="fh-sc-title">🏏 TOP BATTERS</div>
+        <table class="fh-table"><thead><tr><th>Batter</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead><tbody>${batRows}</tbody></table>
+        ${bowlRows ? `<div class="fh-sc-title">⚡ TOP BOWLERS</div><table class="fh-table"><thead><tr><th>Bowler</th><th>O</th><th>R</th><th>W</th><th>Econ</th></tr></thead><tbody>${bowlRows}</tbody></table>` : ''}`;
+    } else {
+      winnerLine = `Match #${idx + 1}`;
+      detailLine = (m.format || '').toUpperCase();
+    }
+
+    const matchDataStr = JSON.stringify(m);
+    const card = document.createElement('div');
+    card.className = 'fh-card';
+    card.innerHTML = `
+      <div class="fh-card-header" onclick="toggleFhCard(this)">
+        <span class="fh-fmt">${(m.format||'?').toUpperCase()}</span>
+        <div style="flex:1;">
+          <div class="fh-winner">${winnerLine}${source==='cloud'?'<span class="fh-cloud">☁</span>':''}</div>
+          <div class="fh-detail">${detailLine}</div>
+        </div>
+        <span class="fh-date">${dateStr}</span>
+      </div>
+      <div class="fh-body" id="fhBody${idx}">
+        ${bodyHtml}
+        <div class="fh-action-row">
+          <button class="btn-dl-pdf" onclick="downloadMatchPDF(${idx})">📄 PDF</button>
+          <button class="btn-share-wa" onclick="shareMatchWA(${idx})">📲 WhatsApp</button>
+        </div>
+      </div>`;
+    card.dataset.matchData = matchDataStr;
+    card.dataset.idx = idx;
+    list.appendChild(card);
+  });
+
+  // Store matches for PDF/share access
+  window._fhMatches = matches;
+}
+
+function toggleFhCard(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function closeFullHistory() {
+  document.getElementById('fullHistoryModal').classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════════════
+// ── PDF DOWNLOAD ──────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+function buildScorecardText(matchData) {
+  const s = matchData?.summary;
+  const lines = [];
+  lines.push('🏏 CRICSCORE LIVE — MATCH SCORECARD');
+  lines.push('━'.repeat(42));
+  const date = new Date(matchData.played_at || matchData.date);
+  lines.push(`Date: ${date.toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}`);
+  lines.push(`Format: ${(matchData.format||'?').toUpperCase()}`);
+  lines.push('');
+
+  if (s?.mode === 'gully2') {
+    lines.push(`🏆 WINNER: ${s.winner} · ${s.detail}`);
+    lines.push('');
+    lines.push('BATTING SCORECARD');
+    lines.push('─'.repeat(38));
+    lines.push('Player            R    B   4s  6s    SR');
+    Object.entries(matchData.players || {}).sort((a,b) => b[1].r - a[1].r).forEach(([name, p]) => {
+      const sr = p.b > 0 ? ((p.r/p.b)*100).toFixed(1) : '0.0';
+      const status = p.out ? p.outDesc : 'not out';
+      lines.push(`${name.padEnd(16)} ${String(p.r).padStart(4)} ${String(p.b).padStart(4)} ${String(p.fours||0).padStart(4)} ${String(p.sixes||0).padStart(3)} ${sr.padStart(6)}`);
+      lines.push(`  ${status}`);
+    });
+    lines.push('');
+    if (Object.keys(matchData.bowlers||{}).length) {
+      lines.push('BOWLING FIGURES');
+      lines.push('─'.repeat(38));
+      lines.push('Bowler            O    R    W  Econ');
+      Object.entries(matchData.bowlers).sort((a,b) => b[1].wickets - a[1].wickets).forEach(([name, b]) => {
+        const overs = b.balls > 0 ? `${Math.floor(b.balls/6)}.${b.balls%6}` : '0.0';
+        const econ = b.balls > 0 ? ((b.runs/b.balls)*6).toFixed(2) : '-';
+        lines.push(`${name.padEnd(16)} ${overs.padStart(4)} ${String(b.runs).padStart(4)} ${String(b.wickets).padStart(4)} ${econ.padStart(6)}`);
+      });
+    }
+  } else if (s?.mode === 'teams') {
+    lines.push(`${s.team1} ${s.score1} vs ${s.team2} ${s.score2}`);
+    lines.push(`🏆 ${s.winner} ${s.detail}`);
+    lines.push('');
+    lines.push('BATTING');
+    lines.push('─'.repeat(38));
+    lines.push('Player            R    B   4s  6s    SR');
+    Object.entries(matchData.players || {}).sort((a,b) => b[1].r - a[1].r).forEach(([name, p]) => {
+      const sr = p.b > 0 ? ((p.r/p.b)*100).toFixed(1) : '0.0';
+      lines.push(`${name.padEnd(16)} ${String(p.r).padStart(4)} ${String(p.b).padStart(4)} ${String(p.fours||0).padStart(4)} ${String(p.sixes||0).padStart(3)} ${sr.padStart(6)}`);
+    });
+    if (Object.keys(matchData.bowlers||{}).length) {
+      lines.push('');
+      lines.push('BOWLING');
+      lines.push('─'.repeat(38));
+      Object.entries(matchData.bowlers).sort((a,b) => b[1].wickets - a[1].wickets).forEach(([name, b]) => {
+        const overs = b.balls > 0 ? `${Math.floor(b.balls/6)}.${b.balls%6}` : '0.0';
+        const econ = b.balls > 0 ? ((b.runs/b.balls)*6).toFixed(2) : '-';
+        lines.push(`${name.padEnd(16)} ${overs.padStart(4)}ov ${String(b.runs).padStart(3)}R ${String(b.wickets).padStart(2)}W  Econ:${econ}`);
+      });
+    }
+  }
+  lines.push('');
+  lines.push('Generated by CricScore Live 🏏');
+  return lines.join('\n');
+}
+
+function generatePDF(matchData, filename) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  // Dark background
+  doc.setFillColor(10, 14, 26);
+  doc.rect(0, 0, 210, 297, 'F');
+
+  let y = 18;
+  const s = matchData?.summary;
+
+  // Header
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  doc.setTextColor(0, 212, 255);
+  doc.text('🏏 CRICSCORE LIVE', 105, y, { align: 'center' });
+  y += 8;
+  doc.setFontSize(10);
+  doc.setTextColor(107, 127, 163);
+  doc.text('MATCH SCORECARD', 105, y, { align: 'center' });
+  y += 4;
+
+  // Top divider
+  doc.setDrawColor(0, 212, 255);
+  doc.setLineWidth(0.5);
+  doc.line(14, y, 196, y);
+  y += 6;
+
+  // Match info
+  const date = new Date(matchData.played_at || matchData.date);
+  const dateStr = date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  doc.setFontSize(9); doc.setTextColor(107, 127, 163);
+  doc.text(`Date: ${dateStr}   Format: ${(matchData.format||'?').toUpperCase()}`, 14, y);
+  y += 7;
+
+  // Winner banner
+  if (s) {
+    doc.setFillColor(34, 197, 94, 30);
+    doc.roundedRect(14, y - 4, 182, 11, 2, 2, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(34, 197, 94);
+    const winnerText = s.mode === 'gully2' ? `🏆 ${s.winner} wins · ${s.detail}` : `🏆 ${s.winner} ${s.detail}`;
+    doc.text(winnerText, 105, y + 3, { align: 'center' });
+    y += 14;
+    if (s.mode === 'teams') {
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(240, 244, 255);
+      doc.text(`${s.team1}  ${s.score1}   vs   ${s.team2}  ${s.score2}`, 105, y, { align: 'center' });
+      y += 8;
+    }
+  }
+
+  // Section helper
+  function drawSection(title, headers, rows, colWidths) {
+    y += 2;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(255, 107, 53);
+    doc.text(title, 14, y); y += 5;
+
+    // Header row
+    doc.setFillColor(26, 34, 53);
+    doc.rect(14, y - 4, 182, 7, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(107, 127, 163);
+    let x = 16;
+    headers.forEach((h, i) => { doc.text(h, x, y); x += colWidths[i]; });
+    y += 4;
+
+    // Data rows
+    rows.forEach((row, ri) => {
+      if (y > 270) { doc.addPage(); doc.setFillColor(10,14,26); doc.rect(0,0,210,297,'F'); y = 20; }
+      if (ri % 2 === 0) { doc.setFillColor(17, 24, 39); doc.rect(14, y - 3, 182, 7, 'F'); }
+      x = 16;
+      row.forEach((cell, i) => {
+        doc.setFont('helvetica', i === 0 ? 'bold' : 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(i === 0 ? [240,244,255] : [180,190,210]);
+        const txt = String(cell || '–');
+        doc.text(txt.length > 20 && i === 0 ? txt.slice(0,19)+'…' : txt, x, y);
+        x += colWidths[i];
+      });
+      y += 7;
+    });
+    y += 3;
+  }
+
+  if (s?.mode === 'gully2') {
+    const batData = Object.entries(matchData.players || {}).sort((a,b) => b[1].r-a[1].r)
+      .map(([name, p]) => [name, p.r, p.b, p.fours||0, p.sixes||0, p.b>0?((p.r/p.b)*100).toFixed(1):'0.0', p.out?(p.outDesc||'out'):'not out']);
+    drawSection('🏏 BATTING SCORECARD', ['Batter','R','B','4s','6s','SR','Status'], batData, [44,14,14,12,12,16,70]);
+
+    const bowlData = Object.entries(matchData.bowlers||{}).sort((a,b) => b[1].wickets-a[1].wickets)
+      .map(([name,b]) => [name, b.balls>0?`${Math.floor(b.balls/6)}.${b.balls%6}`:'0.0', b.runs, b.wickets, b.wides||0, b.noballs||0, b.balls>0?((b.runs/b.balls)*6).toFixed(2):'–']);
+    if (bowlData.length) drawSection('⚡ BOWLING FIGURES', ['Bowler','O','R','W','Wd','NB','Econ'], bowlData, [44,16,14,12,12,12,72]);
+  } else if (s?.mode === 'teams') {
+    const batData = Object.entries(matchData.players||{}).sort((a,b) => b[1].r-a[1].r)
+      .map(([name,p]) => [name, p.r, p.b, p.fours||0, p.sixes||0, p.b>0?((p.r/p.b)*100).toFixed(1):'0.0']);
+    drawSection('🏏 BATTING', ['Batter','R','B','4s','6s','SR'], batData, [54,16,14,14,14,70]);
+
+    const bowlData = Object.entries(matchData.bowlers||{}).filter(([,b])=>b.wickets>0).sort((a,b)=>b[1].wickets-a[1].wickets)
+      .map(([name,b]) => [name, b.balls>0?`${Math.floor(b.balls/6)}.${b.balls%6}`:'0.0', b.runs, b.wickets, b.balls>0?((b.runs/b.balls)*6).toFixed(2):'–']);
+    if (bowlData.length) drawSection('⚡ BOWLING', ['Bowler','O','R','W','Econ'], bowlData, [54,18,16,14,80]);
+  }
+
+  // Footer
+  doc.setDrawColor(42,58,85); doc.line(14, 285, 196, 285);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(107,127,163);
+  doc.text('Generated by CricScore Live 🏏  |  cricscore.app', 105, 290, { align: 'center' });
+
+  doc.save(filename || 'scorecard.pdf');
+}
+
+function downloadScorecardPDF() {
+  // Build from current match/g2State
+  const history = JSON.parse(localStorage.getItem('cricscore_history') || '[]');
+  const last = history[history.length - 1];
+  if (!last) { showToast('No scorecard available yet'); return; }
+  generatePDF(last, `cricscore_${last.format || 'match'}_${new Date().toISOString().slice(0,10)}.pdf`);
+  showToast('PDF downloaded! 📄');
+}
+
+function downloadMatchPDF(idx) {
+  const m = window._fhMatches?.[idx];
+  if (!m) return;
+  generatePDF(m, `cricscore_match_${idx + 1}.pdf`);
+  showToast('PDF downloaded! 📄');
+}
+
+// ══════════════════════════════════════════════════════════
+// ── WHATSAPP SHARE ────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+function buildWhatsAppText(matchData) {
+  return buildScorecardText(matchData);
+}
+
+function shareOnWhatsApp() {
+  const history = JSON.parse(localStorage.getItem('cricscore_history') || '[]');
+  const last = history[history.length - 1];
+  if (!last) { showToast('No scorecard to share yet'); return; }
+  const text = buildWhatsAppText(last);
+  const url = 'https://wa.me/?text=' + encodeURIComponent(text);
+  window.open(url, '_blank');
+}
+
+function shareMatchWA(idx) {
+  const m = window._fhMatches?.[idx];
+  if (!m) return;
+  const text = buildWhatsAppText(m);
+  const url = 'https://wa.me/?text=' + encodeURIComponent(text);
+  window.open(url, '_blank');
+}
+
+// ══════════════════════════════════════════════════════════
+// ── MILESTONE ALERTS ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+const _milestones = {};
+
+function checkMilestone(name, runs) {
+  const key = name + '_' + (match ? 'std' : 'g2');
+  const milestones = [25, 50, 75, 100, 150, 200];
+  for (const m of milestones) {
+    if (runs >= m && !(_milestones[key] >= m)) {
+      _milestones[key] = m;
+      showMilestone(name, m);
+      break;
+    }
+  }
+}
+
+function showMilestone(name, runs) {
+  const config = {
+    25: { emoji: '✨', text: 'TWENTY FIVE!', color: '#4ade80' },
+    50: { emoji: '🎉', text: 'FIFTY!', color: '#fbbf24' },
+    75: { emoji: '💪', text: 'SEVENTY FIVE!', color: '#fb923c' },
+    100: { emoji: '🏆', text: 'CENTURY!', color: '#e879f9' },
+    150: { emoji: '🔥', text: '150 UP!', color: '#f87171' },
+    200: { emoji: '👑', text: 'DOUBLE TON!', color: '#fbbf24' },
+  };
+  const c = config[runs] || { emoji: '🎯', text: `${runs} RUNS!`, color: '#00d4ff' };
+  const banner = document.getElementById('milestoneBanner');
+  document.getElementById('milestoneEmoji').textContent = c.emoji;
+  document.getElementById('milestoneText').textContent = c.text;
+  document.getElementById('milestoneSub').textContent = `${name} brings up ${runs}!`;
+  banner.style.borderColor = c.color;
+  banner.querySelector('.milestone-text').style.color = c.color;
+  banner.classList.add('show');
+  setTimeout(() => banner.classList.remove('show'), 2800);
+}
+
+// Hook milestones into addBall for both standard and G2
+const __origAddBall = window.addBall;
+window.addBall = function(runs) {
+  __origAddBall(runs);
+  // Check milestone for standard match
+  if (match && !isGullyTeam()) {
+    const i = inn();
+    if (i && i.currentPair?.[0]) {
+      const batter = i.currentPair[0];
+      const s = i.batsmen[batter];
+      if (s) checkMilestone(batter, s.r);
+    }
+  }
+};
+const __origAddBallG2 = addBallG2;
+window.addBallG2 = function(runs) {
+  __origAddBallG2(runs);
+  if (g2State) {
+    const b = g2CurrentBatter();
+    if (b) checkMilestone(b.name, b.r);
+  }
+};
+
+// ══════════════════════════════════════════════════════════
+// ── PATCH goHome / startMatch / showResult TO SET ACTIVE ─
+// ══════════════════════════════════════════════════════════
+const __origGoHome = goHome;
+window.goHome = function() {
+  if (matchActive) {
+    showWarnOverlay(() => { matchActive = false; __origGoHome(); });
+    return;
+  }
+  __origGoHome();
+};
+
+const __origStartMatch = startMatch;
+window.startMatch = function() {
+  Object.keys(_milestones).forEach(k => delete _milestones[k]);
+  __origStartMatch();
+  setMatchActive(true);
+};
+
+const __origStartG2 = startG2Match;
+window.startG2Match = function() {
+  Object.keys(_milestones).forEach(k => delete _milestones[k]);
+  __origStartG2();
+  setMatchActive(true);
+};
+
+const __origShowResult = showResult;
+window.showResult = function() {
+  __origShowResult();
+  setMatchActive(false);
+};
+
+const __origShowG2Final = showG2FinalResult;
+window.showG2FinalResult = function() {
+  __origShowG2Final();
+  setMatchActive(false);
+};
+
+// Also patch saveMatchStats to also push to cloud and mark synced
+const __origSaveMatchStats = saveMatchStats;
+window.saveMatchStats = async function() {
+  __origSaveMatchStats();
+  if (currentUser) {
+    const history = JSON.parse(localStorage.getItem('cricscore_history') || '[]');
+    const last = history[history.length - 1];
+    if (last && !last.synced) {
+      await saveMatchToCloud(last);
+      last.synced = true;
+      localStorage.setItem('cricscore_history', JSON.stringify(history));
+    }
+  }
+};
+
+// ══════════════════════════════════════════════════════════
+// ── INIT ──────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  initAuth();
+  // Haptic on every scoring button
+  document.querySelectorAll('.btn-score,.btn-extra,.btn-wicket,.btn-undo').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (navigator.vibrate) navigator.vibrate(40);
+    });
+  });
+  // Wake lock
+  let wakeLock = null;
+  async function requestWakeLock() {
+    try {
+      if ('wakeLock' in navigator) {
+        wakeLock = await navigator.wakeLock.request('screen');
+      }
+    } catch (e) {}
+  }
+  document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible' && matchActive) requestWakeLock();
+  });
+  // Request on match start
+  const _wlOrig = setMatchActive;
+  window.setMatchActive = function(val) {
+    _wlOrig(val);
+    if (val) requestWakeLock();
+    else if (wakeLock) { wakeLock.release(); wakeLock = null; }
+  };
+});
+</script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      // Skip SW registration in sandboxed preview environments (e.g. claudeusercontent.com)
       const isPreview = location.hostname.includes('claudeusercontent.com') || location.protocol === 'blob:' || location.hostname === '';
       if (isPreview) return;
       navigator.serviceWorker.register('./sw.js')
